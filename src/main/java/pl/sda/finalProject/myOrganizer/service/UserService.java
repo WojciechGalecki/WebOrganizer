@@ -43,6 +43,6 @@ public class UserService {
     public List<MyUser> findAllUsers(){
         return userRepository.findAll();
     }
-    
+
 }
 
