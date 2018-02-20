@@ -38,4 +38,7 @@ public class MyUser {
             inverseJoinColumns = {@JoinColumn(name = "roleType", referencedColumnName = "userRoleType")}
     )
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Note> notes;
 }
