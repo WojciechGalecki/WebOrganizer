@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script th:src="@{webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <title>Success!</title>
+</head>
+<body>
+<header th:replace="fragments/header::header"></header>
+
+<div class="container">
+    <div class="alert alert-success">
+        <p>
+            Registration success! To continue please sign in...
+        </p>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
+</html>
