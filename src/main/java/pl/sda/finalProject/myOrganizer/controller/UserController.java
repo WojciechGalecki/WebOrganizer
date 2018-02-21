@@ -30,6 +30,7 @@ public class UserController {
     @PostMapping("/organizer/register")
     public String registerUser(@Valid MyUser user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("MyUser",user);
             return "register";
         }
         if (userService.isUserExist(user.getEmail())) {
