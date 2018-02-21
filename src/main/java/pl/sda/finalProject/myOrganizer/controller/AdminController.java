@@ -21,7 +21,7 @@ public class AdminController {
         return "users";
     }
 
-    @PostMapping("/organizer/users")
+   /* @PostMapping("/organizer/users")
     public String deleteUser(MyUser user) {
         userRepository.delete(user);
         return "users";
@@ -35,5 +35,5 @@ public class AdminController {
                 .userName(user.getUserName())
                 .roles(user.getRoles()).build();
         return "users";
-    }
+    }*/
 }
