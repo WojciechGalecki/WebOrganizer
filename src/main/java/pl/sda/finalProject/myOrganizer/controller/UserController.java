@@ -56,4 +56,11 @@ public class UserController {
         model.addAttribute("activeUser", activeUser);
         return "profile";
     }
+
+    @GetMapping(path = "/login")
+    public String showLoginForm(Model model) {
+        UserModel newUser = new UserModel();
+        model.addAttribute("newUser", newUser);
+        return "login";
+    }
 }
