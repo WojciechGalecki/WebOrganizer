@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <title>Notes</title>
+</head>
+<body>
+<header th:replace="fragments/header::header"></header>
+
+<form th:action="@{/organizer/notes}" th:object="${newNote}" method="post" id="newNote">
+    Note name: <input type="text" th:field="*{name}" id="name"/>
+    <div class="text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    <textarea rows="5" cols="80" th:field="*{description}" id="description" form="newNote" placeholder="Enter text..."></textarea>
+    <div class="text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{name}"></div>
+    <input type="submit" value="Add note"/>
+</form>
+<footer th:replace="fragments/footer::footer"></footer>
+
+</body>
+</html>
