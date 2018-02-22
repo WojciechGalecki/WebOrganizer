@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
 import pl.sda.finalProject.myOrganizer.entity.Note;
+import pl.sda.finalProject.myOrganizer.entity.Task;
 import pl.sda.finalProject.myOrganizer.entity.UserRole;
 
 import javax.validation.constraints.NotNull;
@@ -34,11 +35,14 @@ public class UserModel {
 
     private List<Note> notes;
 
+    private List<Task> tasks;
+
     public UserModel(MyUser userEntity) {
         this.email = userEntity.getEmail();
         this.userName = userEntity.getUserName();
         this.password = userEntity.getPassword();
         this.userRole = userEntity.getUserRole();
         this.notes = userEntity.getNotes();
+        this.tasks = userEntity.getTasks();
     }
 }

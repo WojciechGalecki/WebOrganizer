@@ -28,4 +28,7 @@ public class MyUser {
 
     @OneToMany(mappedBy = "user")
     private List<Note> notes;
+
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks;
 }

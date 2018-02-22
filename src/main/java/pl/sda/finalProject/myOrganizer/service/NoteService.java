@@ -16,8 +16,6 @@ public class NoteService {
 
     @Autowired
     private INoteRepository noteRepository;
-    @Autowired
-    private UserService userService;
 
     public void addNote(Note note) {
         note.setCreationDate(LocalDate.now());

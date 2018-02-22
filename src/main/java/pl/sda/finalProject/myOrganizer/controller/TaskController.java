@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
 import pl.sda.finalProject.myOrganizer.entity.Note;
-import pl.sda.finalProject.myOrganizer.service.NoteService;
+import pl.sda.finalProject.myOrganizer.entity.Task;
+import pl.sda.finalProject.myOrganizer.service.TaskService;
 import pl.sda.finalProject.myOrganizer.service.UserService;
 
 import javax.validation.Valid;
@@ -19,32 +20,32 @@ import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/organizer")
-public class NoteController {
+public class TaskController {
 
     @Autowired
-    private NoteService noteService;
+    private TaskService taskService;
     @Autowired
     private UserService userService;
 
-    @GetMapping(path = "/notes")
-    public String showNotesPage(Model model) {
-        Note newNote = new Note();
-        model.addAttribute("newNote", newNote);
-        return "notes";
+    @GetMapping(path = "/tasks")
+    public String showTasksPage(Model model, Principal principal){
+        Task newTask = new Task();
+        MyUser activeUser = userService.findUserByEmail(principal.getName());
+        model.addAttribute("newTask", newTask);
+        model.addAttribute("tasks",taskService.findTasksByUser(activeUser));
+        return "tasks";
     }
 
-    @PostMapping(path = "/notes")
-    public String addNote(@Valid @ModelAttribute("newNote") Note newNote, BindingResult bindingResult,
+    @PostMapping(path = "/tasks")
+    public String addNote(@Valid @ModelAttribute("newTask") Task newTask, BindingResult bindingResult,
                           Principal principal) {
         MyUser activeUser = userService.findUserByEmail(principal.getName());
-        newNote.setUser(activeUser);
-        newNote.setCreationDate(LocalDate.now());
+        newTask.setUser(activeUser);
+        newTask.setCreationDate(LocalDate.now());
         if (bindingResult.hasErrors()) {
-            return "notes";
+            return "tasks";
         }
-        noteService.addNote(newNote);
-        return "notes";
+        taskService.addTask(newTask);
+        return "tasks";
     }
 }
-
-
