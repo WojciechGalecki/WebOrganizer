@@ -8,30 +8,34 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import pl.sda.finalProject.myOrganizer.entity.MyUser;
 import pl.sda.finalProject.myOrganizer.model.UserModel;
 import pl.sda.finalProject.myOrganizer.service.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
+@RequestMapping("/organizer")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/organizer")
+    @GetMapping
     public String showHomePage() {
         return "organizer";
     }
 
-    @GetMapping("/organizer/register")
+    @GetMapping(path = "/register")
     public String showRegisterForm(Model model) {
         UserModel newUser = new UserModel();
         model.addAttribute("newUser", newUser);
         return "register";
     }
 
-    @PostMapping("/organizer/register")
+    @PostMapping(path = "/register")
     public String registerUser(@Valid @ModelAttribute("newUser") UserModel newUser, BindingResult bindingResult) {
 
         if (userService.isUserExist(newUser.getEmail())) {
@@ -44,5 +48,12 @@ public class UserController {
         }
         userService.registerUser(newUser);
         return "success";
+    }
+
+    @GetMapping(path = "/profile")
+    public String showProfilePage(Model model, Principal principal){
+        MyUser activeUser = userService.findUserByEmail(principal.getName());
+        model.addAttribute("activeUser", activeUser);
+        return "profile";
     }
 }
