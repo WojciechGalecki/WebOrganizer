@@ -3,10 +3,11 @@ package pl.sda.finalProject.myOrganizer.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
-import pl.sda.finalProject.myOrganizer.model.MyUser;
-import pl.sda.finalProject.myOrganizer.model.Role;
-import pl.sda.finalProject.myOrganizer.model.UserRoleType;
+import pl.sda.finalProject.myOrganizer.entity.MyUser;
+import pl.sda.finalProject.myOrganizer.entity.UserRole;
+import pl.sda.finalProject.myOrganizer.model.UserModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,23 +18,26 @@ public class UserService {
     @Autowired
     private IUserRepository userRepository;
 
-    public void addUser(MyUser user) {
-        createUserOrAdmin(user, UserRoleType.USER);
+    public void registerUser(UserModel userModel) {
+        createUserOrAdmin(userModel, UserRole.USER);
     }
 
-    public void addAdmin(MyUser user) {
-        createUserOrAdmin(user, UserRoleType.ADMIN);
+    public void registerAdmin(UserModel userModel) {
+        createUserOrAdmin(userModel, UserRole.ADMIN);
     }
 
-    private void createUserOrAdmin(MyUser user, UserRoleType roleType) {
+    private void createUserOrAdmin(UserModel userModel, UserRole userRole) {
+
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role userRole = Role.builder()
-                .userRoleType(roleType).build();
-        List<Role> roles = new ArrayList<>();
-        roles.add(userRole);
-        user.setRoles(roles);
-        userRepository.save(user);
+        userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
+
+        MyUser newUser = MyUser.builder()
+                .email(userModel.getEmail())
+                .password(userModel.getPassword())
+                .userName(userModel.getUserName())
+                .userRole(userRole).build();
+
+        userRepository.save(newUser);
     }
 
     public MyUser findUserByEmail(String email) {
@@ -50,5 +54,7 @@ public class UserService {
             return true;
         } else return false;
     }
+
+
 }
 

@@ -5,29 +5,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
-import pl.sda.finalProject.myOrganizer.model.MyUser;
+import pl.sda.finalProject.myOrganizer.entity.MyUser;
+import pl.sda.finalProject.myOrganizer.service.UserService;
 
 @Controller
 public class AdminController {
 
     @Autowired
-    private IUserRepository userRepository;
+    private UserService userService;
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping("/organizer/users")
     public String showUsers(Model model){
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userService.findAllUsers());
         model.addAttribute("MyUser", new MyUser());
         return "users";
     }
 
-   /* @PostMapping("/organizer/users")
+   @PostMapping("/organizer/users")
     public String deleteUser(MyUser user) {
-        userRepository.delete(user);
+       // roleService.deleteRoleByUserEmail(user.getEmail());
+        userService.deleteUser(user);
         return "users";
     }
 
-    @PostMapping("/organizer/users")
+    /*@PostMapping("/organizer/users")
     public String editUser(MyUser user) {
         MyUser editedUser = userRepository.findOne(user.getEmail());
         editedUser = MyUser.builder()

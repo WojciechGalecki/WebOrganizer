@@ -3,8 +3,8 @@ package pl.sda.finalProject.myOrganizer.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.sda.finalProject.myOrganizer.dao.INoteRepository;
-import pl.sda.finalProject.myOrganizer.model.MyUser;
-import pl.sda.finalProject.myOrganizer.model.Note;
+import pl.sda.finalProject.myOrganizer.entity.MyUser;
+import pl.sda.finalProject.myOrganizer.entity.Note;
 
 import java.util.List;
 

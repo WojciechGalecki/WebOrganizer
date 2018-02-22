@@ -28,6 +28,12 @@
             <td th:text="${user.userName}">name</td>
             <td th:text="${user.email}">email</td>
             <td th:text="${user.password}">password</td>
+            <td>
+                <form th:action="@{/organizer/users}" th:object="${user}" method="post">
+                    <input type="hidden" th:field="*{email}"/>
+                    <input type="submit" value="Delete" class="btn btn-primary"/>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

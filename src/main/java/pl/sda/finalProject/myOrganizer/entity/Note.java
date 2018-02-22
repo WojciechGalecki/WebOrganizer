@@ -1,4 +1,4 @@
-package pl.sda.finalProject.myOrganizer.model;
+package pl.sda.finalProject.myOrganizer.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import pl.sda.finalProject.myOrganizer.entity.MyUser;
 
 import javax.persistence.*;
 import java.time.LocalDate;
