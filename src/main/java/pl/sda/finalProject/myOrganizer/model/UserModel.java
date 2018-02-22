@@ -30,7 +30,6 @@ public class UserModel {
     @Size(min = 5)
     private String password;
 
-    @NotNull
     private UserRole userRole;
 
     private List<Note> notes;

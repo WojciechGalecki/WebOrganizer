@@ -38,6 +38,7 @@ public class UserService {
                 .userRole(userRole).build();
 
         userRepository.save(newUser);
+
     }
 
     public MyUser findUserByEmail(String email) {
