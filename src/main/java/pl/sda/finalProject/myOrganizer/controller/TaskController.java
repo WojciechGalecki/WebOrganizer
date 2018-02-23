@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
-import pl.sda.finalProject.myOrganizer.entity.Note;
 import pl.sda.finalProject.myOrganizer.entity.Task;
 import pl.sda.finalProject.myOrganizer.service.TaskService;
 import pl.sda.finalProject.myOrganizer.service.UserService;
@@ -19,7 +18,6 @@ import java.security.Principal;
 import java.time.LocalDate;
 
 @Controller
-@RequestMapping("/organizer")
 public class TaskController {
 
     @Autowired
@@ -27,7 +25,7 @@ public class TaskController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(path = "/tasks")
+    @GetMapping("/organizer/tasks")
     public String showTasksPage(Model model, Principal principal){
         Task newTask = new Task();
         MyUser activeUser = userService.findUserByEmail(principal.getName());
@@ -36,7 +34,7 @@ public class TaskController {
         return "tasks";
     }
 
-    @PostMapping(path = "/tasks")
+    @PostMapping("/organizer/tasks")
     public String addNote(@Valid @ModelAttribute("newTask") Task newTask, BindingResult bindingResult,
                           Principal principal) {
         MyUser activeUser = userService.findUserByEmail(principal.getName());
@@ -46,6 +44,6 @@ public class TaskController {
             return "tasks";
         }
         taskService.addTask(newTask);
-        return "tasks";
+        return "redirect:/organizer/tasks";
     }
 }

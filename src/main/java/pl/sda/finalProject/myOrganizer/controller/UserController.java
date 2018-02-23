@@ -63,4 +63,14 @@ public class UserController {
         model.addAttribute("newUser", newUser);
         return "login";
     }
+
+    @GetMapping("/access-denied")
+    public String accessDenied() {
+        return "access-denied";
+    }
+
+    @GetMapping("/login-failure")
+    public String loginFailure() {
+        return "login-failure";
+    }
 }
