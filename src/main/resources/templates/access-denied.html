@@ -1,1 +1,20 @@
-access denied
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <title>Access denied!</title>
+</head>
+<body>
+<header th:replace="fragments/header::header"></header>
+
+<div class="container myContainer">
+    <div class="alert alert-dismissible alert-danger">
+        <strong>Access denied! You don't have ADMIN rights</strong>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
+</html>

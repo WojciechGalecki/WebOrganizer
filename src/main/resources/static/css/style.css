@@ -1,0 +1,14 @@
+.myContainer {
+    margin-top: 20px;
+    text-align: center;
+}
+.myFooter {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 2px;
+    background-color: #efefef;
+    text-align: center;
+    color: black;
+}
