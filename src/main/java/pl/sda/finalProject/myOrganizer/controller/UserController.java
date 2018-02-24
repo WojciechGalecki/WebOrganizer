@@ -28,14 +28,14 @@ public class UserController {
         return "organizer";
     }
 
-    @GetMapping(path = "/register")
+    @GetMapping("/register")
     public String showRegisterForm(Model model) {
         UserModel newUser = new UserModel();
         model.addAttribute("newUser", newUser);
         return "register";
     }
 
-    @PostMapping(path = "/register")
+    @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute("newUser") UserModel newUser, BindingResult bindingResult) {
 
         if (userService.isUserExist(newUser.getEmail())) {
@@ -50,14 +50,14 @@ public class UserController {
         return "success";
     }
 
-    @GetMapping(path = "/profile")
+    @GetMapping("/profile")
     public String showProfilePage(Model model, Principal principal){
         MyUser activeUser = userService.findUserByEmail(principal.getName());
         model.addAttribute("activeUser", activeUser);
         return "profile";
     }
 
-    @GetMapping(path = "/login")
+    @GetMapping("/login")
     public String showLoginForm(Model model) {
         UserModel newUser = new UserModel();
         model.addAttribute("newUser", newUser);

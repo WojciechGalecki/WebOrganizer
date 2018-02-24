@@ -20,16 +20,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.jdbcAuthentication()
-//                .dataSource(dataSource)
-//                .usersByUsernameQuery("select email as principal, password as credentials, true from my_user where email=?")
-//                .authoritiesByUsernameQuery("select email as principal, user_role as role from my_user where email=?")
-//                .passwordEncoder(passwordEncoder()).rolePrefix("ROLE_");
-        auth.inMemoryAuthentication().withUser("user").password("12345").roles("ADMIN", "USER");
+        auth.jdbcAuthentication()
+                .dataSource(dataSource)
+                .usersByUsernameQuery("select email as principal, password as credentials, true from my_user where email=?")
+                .authoritiesByUsernameQuery("select email as principal, user_role as role from my_user where email=?")
+                .passwordEncoder(passwordEncoder()).rolePrefix("ROLE_");
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -42,19 +41,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/organizer/notes", "/organizer/tasks", "/organizer/profile")
                 .hasAnyRole("USER,ADMIN").and()
                 .formLogin()
-
-                //.passwordParameter("password")
-               // .usernameParameter("username")
-                .loginPage("/organizer/login")
-                .loginProcessingUrl("{/loginProcessing")
-              //  .failureUrl("/organizer/login-failure")
-
-                .defaultSuccessUrl("/organizer")
-
-                //.and().logout().logoutUrl("/logout").logoutSuccessUrl("/organizer/login").and()
-               // .exceptionHandling().accessDeniedPage("/organizer/access-denied").and()
-        .and().httpBasic().disable();
-                //.csrf().disable();
+                .passwordParameter("password")
+                .usernameParameter("username")
+                //TODO not default login address
+                //.loginPage("/organizer/login")
+                .loginProcessingUrl("/loginProcessing")
+                .failureUrl("/organizer/login-failure")
+                .defaultSuccessUrl("/organizer").and()
+                //TODO logout view
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/organizer/login").and()
+                .exceptionHandling().accessDeniedPage("/organizer/access-denied").and()
+                .httpBasic().disable();
     }
 }
 

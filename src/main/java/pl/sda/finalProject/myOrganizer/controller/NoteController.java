@@ -26,24 +26,24 @@ public class NoteController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(path = "/notes")
+    @GetMapping("/notes")
     public String showNotesPage(Model model) {
         Note newNote = new Note();
         model.addAttribute("newNote", newNote);
         return "notes";
     }
 
-    @PostMapping(path = "/notes")
+    @PostMapping("/notes")
     public String addNote(@Valid @ModelAttribute("newNote") Note newNote, BindingResult bindingResult,
                           Principal principal) {
         MyUser activeUser = userService.findUserByEmail(principal.getName());
         newNote.setUser(activeUser);
         newNote.setCreationDate(LocalDate.now());
         if (bindingResult.hasErrors()) {
-            return "notes";
+            return "redirect:/organizer/notes";
         }
         noteService.addNote(newNote);
-        return "notes";
+        return "redirect:/organizer/notes";
     }
 }
 
