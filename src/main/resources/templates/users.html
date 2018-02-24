@@ -25,8 +25,12 @@
             <td th:text="${user.userName}">name</td>
             <td th:text="${user.email}">email</td>
             <td th:text="${user.password}">password</td>
-
-            <td><a class="btn btn-danger" th:href="@{/organizer/users/delete/{email}(email=${user.getEmail()})}">DELETE</a></td>
+            <td>
+                <form th:action="@{/organizer/users/delete}" method="post">
+                    <input type="hidden" name="email" th:value="${user.email}"/>
+                    <input type="submit" value="DELETE" class="btn btn-outline-danger"/>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
