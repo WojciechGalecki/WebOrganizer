@@ -56,6 +56,9 @@ public class UserService {
         } else return false;
     }
 
+    public void deleteUser(String email){
+        userRepository.delete(email);
+    }
 
 }
 

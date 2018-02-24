@@ -9,7 +9,7 @@
 <body>
 <header th:replace="fragments/header::header"></header>
 
-<div>
+<div class="container myContainer">
     <table class="table table-hover">
         <thead>
         <tr>
@@ -20,18 +20,13 @@
         </tr>
         </thead>
         <tbody>
-
-        <tr class="table-primary" th:each="user: ${users}">
-            <th scope="row"></th>
+        <tr class="table-dark" th:each="user: ${users}">
+            <td th:text="${users.indexOf(user) + 1}"></td>
             <td th:text="${user.userName}">name</td>
             <td th:text="${user.email}">email</td>
             <td th:text="${user.password}">password</td>
-           <!-- <td>
-                <form th:action="@{/organizer/users}" th:object="${user}" method="post">
-                    <input type="hidden" th:field="*{email}"/>
-                    <input type="submit" value="Delete" class="btn btn-primary"/>
-                </form>
-            </td>-->
+
+            <td><a class="btn btn-danger" th:href="@{/organizer/users/delete/{email}(email=${user.getEmail()})}">DELETE</a></td>
         </tr>
         </tbody>
     </table>
