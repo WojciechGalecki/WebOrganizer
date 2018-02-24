@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
     <title>Users</title>
@@ -17,6 +18,8 @@
             <th scope="col">User Name</th>
             <th scope="col">Email</th>
             <th scope="col">Password (coded)</th>
+            <th scope="col">Role</th>
+            <th scope="col">Operations</th>
         </tr>
         </thead>
         <tbody>
@@ -25,6 +28,7 @@
             <td th:text="${user.userName}">name</td>
             <td th:text="${user.email}">email</td>
             <td th:text="${user.password}">password</td>
+            <td th:text="${user.userRole}">role</td>
             <td>
                 <form th:action="@{/organizer/users/delete}" method="post">
                     <input type="hidden" name="email" th:value="${user.email}"/>
@@ -35,7 +39,29 @@
         </tbody>
     </table>
 </div>
+    <hr/>
+    <div>
+        <ul class="pagination">
+            <li class="page-item" th:each="i: ${#numbers.sequence(1,pages.totalPages)}">
+                <a class="page-link" th:href="@{organizer/users/(page=${i})}"
+                   th:text="${i}" th:classappend="${currentPage == i} ? 'active' : ''">#</a>
+            </li>
+        </ul>
+    </div>
+<hr/>
 
-<footer th:replace="fragments/footer::footer"></footer>
+
+    <footer th:replace="fragments/footer::footer"></footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
+
 </body>
 </html>

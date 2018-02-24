@@ -3,10 +3,10 @@
     text-align: center;
 }
 .myFooter {
-    position: absolute;
-    right: 0;
-    bottom: 0;
+    position: fixed;
     left: 0;
+    bottom: 0;
+    width: 100%;
     padding: 2px;
     background-color: #efefef;
     text-align: center;
