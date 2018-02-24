@@ -27,9 +27,11 @@ public class NoteController {
     private UserService userService;
 
     @GetMapping(path = "/notes")
-    public String showNotesPage(Model model) {
+    public String showNotesPage(Model model, Principal principal) {
         Note newNote = new Note();
+        MyUser activeUser = userService.findUserByEmail(principal.getName());
         model.addAttribute("newNote", newNote);
+        model.addAttribute("notes", noteService.findNotesByUser(activeUser));
         return "notes";
     }
 
@@ -40,10 +42,10 @@ public class NoteController {
         newNote.setUser(activeUser);
         newNote.setCreationDate(LocalDate.now());
         if (bindingResult.hasErrors()) {
-            return "notes";
+            return "redirect:/organizer/notes";
         }
         noteService.addNote(newNote);
-        return "notes";
+        return "redirect:/organizer/notes";
     }
 }
 

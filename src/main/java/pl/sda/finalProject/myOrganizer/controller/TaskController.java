@@ -27,7 +27,7 @@ public class TaskController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(path = "/tasks")
+    @GetMapping("/tasks")
     public String showTasksPage(Model model, Principal principal){
         Task newTask = new Task();
         MyUser activeUser = userService.findUserByEmail(principal.getName());
@@ -36,16 +36,16 @@ public class TaskController {
         return "tasks";
     }
 
-    @PostMapping(path = "/tasks")
+    @PostMapping("/tasks")
     public String addNote(@Valid @ModelAttribute("newTask") Task newTask, BindingResult bindingResult,
                           Principal principal) {
         MyUser activeUser = userService.findUserByEmail(principal.getName());
         newTask.setUser(activeUser);
         newTask.setCreationDate(LocalDate.now());
         if (bindingResult.hasErrors()) {
-            return "tasks";
+            return "redirect:/organizer/tasks";
         }
         taskService.addTask(newTask);
-        return "tasks";
+        return "redirect:/organizer/tasks";
     }
 }

@@ -16,6 +16,36 @@
     <div class="text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{name}"></div>
     <input type="submit" value="Add note"/>
 </form>
+
+<!--<div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Note name</th>
+            <th scope="col">Creation date</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr class="table-info" th:each="note: ${notes}">
+            <th scope="row"></th>
+            <td th:text="${note.name}">name</td>
+            <td th:text="${note.creationDate}">date</td>
+        </tr>
+        </tbody>
+    </table>
+</div>-->
+<div class="container">
+<div class="card text-white bg-info mb-3" style="max-width: 20rem;" th:each="note: ${notes}">
+    <div class="card-header" th:text="${note.name}"></div>
+    <div class="card-body">
+        <h4 class="card-title" th:text="${note.description}"></h4>
+        <p class="card-text" style="font-size: x-small" th:text="${note.creationDate}"></p>
+    </div>
+</div>
+</div>
+
 <footer th:replace="fragments/footer::footer"></footer>
 
 </body>

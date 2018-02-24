@@ -28,14 +28,14 @@ public class UserController {
         return "organizer";
     }
 
-    @GetMapping(path = "/register")
+    @GetMapping("/register")
     public String showRegisterForm(Model model) {
         UserModel newUser = new UserModel();
         model.addAttribute("newUser", newUser);
         return "register";
     }
 
-    @PostMapping(path = "/register")
+    @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute("newUser") UserModel newUser, BindingResult bindingResult) {
 
         if (userService.isUserExist(newUser.getEmail())) {
