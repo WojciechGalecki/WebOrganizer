@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
-import pl.sda.finalProject.myOrganizer.entity.Note;
 import pl.sda.finalProject.myOrganizer.entity.Task;
 import pl.sda.finalProject.myOrganizer.service.TaskService;
 import pl.sda.finalProject.myOrganizer.service.UserService;

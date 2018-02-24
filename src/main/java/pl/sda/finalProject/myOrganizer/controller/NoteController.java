@@ -26,7 +26,7 @@ public class NoteController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(path = "/notes")
+    @GetMapping("/notes")
     public String showNotesPage(Model model, Principal principal) {
         Note newNote = new Note();
         MyUser activeUser = userService.findUserByEmail(principal.getName());
@@ -35,7 +35,7 @@ public class NoteController {
         return "notes";
     }
 
-    @PostMapping(path = "/notes")
+    @PostMapping("/notes")
     public String addNote(@Valid @ModelAttribute("newNote") Note newNote, BindingResult bindingResult,
                           Principal principal) {
         MyUser activeUser = userService.findUserByEmail(principal.getName());
