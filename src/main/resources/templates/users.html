@@ -30,6 +30,12 @@
             <td th:text="${user.password}">password</td>
             <td th:text="${user.userRole}">role</td>
             <td>
+                <form th:action="@{/organizer/users/edit}" method="get">
+                    <input type="hidden" name="email" th:value="${user.email}"/>
+                    <input type="submit" value="EDIT" /><!--th:href="@{/organizer/users/edit}"-->
+                </form>
+            </td>
+            <td>
                 <form th:action="@{/organizer/users/delete}" method="post">
                     <input type="hidden" name="email" th:value="${user.email}"/>
                     <input type="submit" value="DELETE" class="btn btn-outline-danger"/>
@@ -40,6 +46,7 @@
     </table>
 </div>
     <hr/>
+<!--TODO fix pagination -->
     <div>
         <ul class="pagination">
             <li class="page-item" th:each="i: ${#numbers.sequence(1,pages.totalPages)}">

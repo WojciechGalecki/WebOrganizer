@@ -44,7 +44,7 @@ public class UserController {
                     "User with this email already exists!"));
         }
         if (bindingResult.hasErrors()) {
-            return "register";
+            return "redirect:/register";
         }
         userService.registerUser(newUser);
         return "success";
@@ -59,10 +59,22 @@ public class UserController {
 
     @GetMapping("/login")
     public String showLoginForm(Model model) {
-        UserModel newUser = new UserModel();
-        model.addAttribute("newUser", newUser);
+        UserModel logUser = new UserModel();
+        model.addAttribute("logUser", logUser);
         return "login";
     }
+
+   /* @PostMapping("/login")
+    public String loginUser(@Valid @ModelAttribute("logUser") UserModel logUser, BindingResult bindingResult){
+        if(userService.findUserByEmail(logUser.getEmail()).getPassword().equals(logUser.getPassword())){
+            return "success";
+        }
+        if (bindingResult.hasErrors()) {
+            return "login";
+        }
+
+        return "organizer";
+    }*/
 
     @GetMapping("/access-denied")
     public String accessDenied() {
