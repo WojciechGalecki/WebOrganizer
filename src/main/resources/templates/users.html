@@ -12,7 +12,6 @@
 <header th:replace="fragments/header::header"></header>
 
 <div class="container myContainer">
-    <button class="btn btn-success newBtn">ADD</button>
     <div class="card">
         <div class="card-block">
             <table class="table table-hover">
@@ -119,29 +118,21 @@
 <script>
     $(document).ready(function () {
 
-        $('.table .myBtn .newBtn').on('click', function (event) {
+        $('.table .myBtn').on('click', function (event) {
 
             event.preventDefault();
             var href = $(this).attr('href');
             var text = $(this).text();
-            if (text == 'EDIT') {
-                $.get(href, function (user, status) {
 
-                    $('.myModal #userName').value(user.userName);
-                    $('.myModal #password').value(user.password);
-                    $('.myModal #email').value(user.email);
-                    $('.myModal #userRole').value(user.userRole);
-                });
+            $.get(href, function (user, status) {
 
-                $('.myModal #exampleModal').modal();
-            } else {
+                $('.myModal #userName').value(user.userName);
+                $('.myModal #password').value(user.password);
+                $('.myModal #email').value(user.email);
+                $('.myModal #userRole').value(user.userRole);
+            });
 
-                $('.myModal #userName').value('');
-                $('.myModal #password').value('');
-                $('.myModal #email').value('');
-                $('.myModal #userRole').value('USER');
-                $('.myModal #exampleModal').modal();
-            }
+            $('.myModal #exampleModal').modal();
         });
     });
 </script>
