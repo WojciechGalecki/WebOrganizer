@@ -2,6 +2,7 @@ package pl.sda.finalProject.myOrganizer.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,4 +46,5 @@ public class AdminController {
     public MyUser findUser(String email){
         return userService.findUserByEmail(email);
     }
-}
+
+   
