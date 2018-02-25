@@ -17,25 +17,24 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/organizer")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping
+    @GetMapping("/organizer")
     public String showHomePage() {
         return "organizer";
     }
 
-    @GetMapping("/register")
+    @GetMapping("/organizer/register")
     public String showRegisterForm(Model model) {
         UserModel newUser = new UserModel();
         model.addAttribute("newUser", newUser);
         return "register";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/organizer/register")
     public String registerUser(@Valid @ModelAttribute("newUser") UserModel newUser, BindingResult bindingResult) {
 
         if (userService.isUserExist(newUser.getEmail())) {
@@ -44,13 +43,13 @@ public class UserController {
                     "User with this email already exists!"));
         }
         if (bindingResult.hasErrors()) {
-            return "redirect:/register";
+            return "redirect:/organizer/register";
         }
         userService.registerUser(newUser);
         return "success";
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/organizer/profile")
     public String showProfilePage(Model model, Principal principal){
         MyUser activeUser = userService.findUserByEmail(principal.getName());
         model.addAttribute("activeUser", activeUser);
@@ -58,23 +57,9 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String showLoginForm(Model model) {
-        UserModel logUser = new UserModel();
-        model.addAttribute("logUser", logUser);
+    public String showLoginForm() {
         return "login";
     }
-
-   /* @PostMapping("/login")
-    public String loginUser(@Valid @ModelAttribute("logUser") UserModel logUser, BindingResult bindingResult){
-        if(userService.findUserByEmail(logUser.getEmail()).getPassword().equals(logUser.getPassword())){
-            return "success";
-        }
-        if (bindingResult.hasErrors()) {
-            return "login";
-        }
-
-        return "organizer";
-    }*/
 
     @GetMapping("/access-denied")
     public String accessDenied() {

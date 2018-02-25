@@ -2,6 +2,7 @@ package pl.sda.finalProject.myOrganizer.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
@@ -17,6 +18,8 @@ public class UserService {
 
     @Autowired
     private IUserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public void registerUser(UserModel userModel) {
         createUserOrAdmin(userModel, UserRole.USER);
@@ -28,7 +31,7 @@ public class UserService {
 
     private void createUserOrAdmin(UserModel userModel, UserRole userRole) {
 
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
 
         MyUser newUser = MyUser.builder()
