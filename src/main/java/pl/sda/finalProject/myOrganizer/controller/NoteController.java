@@ -47,19 +47,31 @@ public class NoteController {
         return "redirect:/organizer/notes";
     }
 
-    @GetMapping("/organizer/notes/edit")
-    public String prepareToEdit(Model model){
-        Note newNote = new Note();
-        model.addAttribute("editNote", newNote);
-        return "redirect:/organizer/notes";
+    @GetMapping(path = "/organizer/notes/edit/{id}")
+    public String showEditForm(@PathVariable("id") Long id, Model model) {
+        Note editNote = noteRepository.findOne(id);
+
+        if (editNote == null) {
+            return "noteNotFound";
+        }
+        model.addAttribute("editNote", editNote);
+
+        return "editNote";
     }
 
-    @PostMapping("/organizer/notes/edit")
-    public String editNote(@Valid @ModelAttribute("editNote") Note editNote, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "redirect:/organizer/notes/edit";
+    @PostMapping(path = "/organizer/notes/edit/{id}")
+    public String editNote(@PathVariable("id") Long id, @Valid @ModelAttribute("editNote") Note editNote,
+                           BindingResult bindingResult) {
+        Note entity = noteRepository.findOne(id);
+
+        if (entity == null) {
+            return "noteNotFound";
         }
-        noteService.addNote(editNote);
+        if (bindingResult.hasErrors()) {
+            return "redirect:/organizer/notes/edit/{id}";
+        }
+        entity.setDescription(editNote.getDescription());
+        noteService.addNote(entity);
         return "redirect:/organizer/notes";
     }
 

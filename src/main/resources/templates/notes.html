@@ -31,36 +31,19 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Open/Edit</th>
                     <th scope="col">Note name</th>
                     <th scope="col">Creation date</th>
+                    <th scope="col">Open/Edit</th>
                     <th scope="col">Delete</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr class="table-info" th:each="note: ${notes}">
                     <td th:text="${notes.indexOf(note) + 1}"></td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-outline-secondary">OPEN</button>
-                            <form th:action="@{/organizer/notes/edit}" th:object="${newNote}" method="post"
-                                  id="editNote">
-                                <div class="dropdown-content">
-                                    <input type="hidden" th:field="*{id}" th:value="${note.id}"/>
-                                    <textarea class="form-control myTextarea" rows="10" id="EditDescription"
-                                              th:field="*{description}"
-                                              th:text="${note.description}"></textarea>
-                                    <hr/><input type="text" th:field="*{name}" th:text="${note.name}">erfer</input>
-                                    <div class="text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-                                    <button type="subbmit" class="btn btn-secondary btn-lg btn-block">Save</button>
-                                </div>
-                            </form>
-                        </div>
-                    </td>
-                    <td th:text="${note.name}">name</td>
-                    <td th:text="${note.creationDate}">date</td>
-                    <td><a class="btn btn-outline-danger" th:href="@{/organizer/notes/delete/{id}(id=${note.id})}">Delete</a>
-                    </td>
+                    <td th:text="${note.name}"></td>
+                    <td th:text="${note.creationDate}"></td>
+                    <td><a class="btn btn-outline-secondary" th:href="@{/organizer/notes/edit/{id}(id=${note.id})}">Open/Edit</a></td>
+                    <td><a class="btn btn-outline-danger" th:href="@{/organizer/notes/delete/{id}(id=${note.id})}">Delete</a></td>
                 </tr>
                 </tbody>
             </table>

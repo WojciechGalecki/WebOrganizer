@@ -43,7 +43,7 @@ public class AdminController {
         UserModel editModel = new UserModel(editUser);
         model.addAttribute("edit", editModel);
 
-        return "edit";
+        return "editUser";
     }
 
     @PostMapping(path = "/organizer/users/edit/{email}")
