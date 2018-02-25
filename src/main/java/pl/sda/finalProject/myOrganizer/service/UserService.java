@@ -66,12 +66,11 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUser(String email){
+    public void deleteUser(String email) {
         MyUser userToDelete = userRepository.findOne(email);
         noteRepository.deleteAllByUser(userToDelete);
         taskRepository.deleteAllByUser(userToDelete);
         userRepository.delete(userToDelete);
     }
-
 }
 

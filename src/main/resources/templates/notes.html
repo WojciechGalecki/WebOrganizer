@@ -8,45 +8,49 @@
 </head>
 <body>
 <header th:replace="fragments/header::header"></header>
+<div class="container-fluid myNotes">
+    <div class="row">
+        <div class="col-sm-4">
+            <form th:action="@{/organizer/notes}" th:object="${newNote}" method="post" id="newNote">
+                <h4>Note name:</h4>
+                <div class="myTextNote"><input class="noteName" type="text" th:field="*{name}" id="name"/></div>
+                <div class="text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                <div>
+                    <textarea class="form-control myTextarea" rows="10" th:field="*{description}" id="description"
+                              form="newNote" placeholder="Enter some text..."></textarea>
+                </div>
+                <div class="text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{name}"></div>
+                <button type="subbmit" class="btn btn-primary">Add Your Note</button>
+            </form>
+        </div>
 
-<form th:action="@{/organizer/notes}" th:object="${newNote}" method="post" id="newNote">
-    Note name: <input type="text" th:field="*{name}" id="name"/>
-    <div class="text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-    <textarea rows="5" cols="80" th:field="*{description}" id="description" form="newNote" placeholder="Enter text..."></textarea>
-    <div class="text text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{name}"></div>
-    <input type="submit" value="Add note"/>
-</form>
+        <div class="col-sm-8">
+            <h4 class="myTitleListNotes">Your notes</h4>
+            <table class="table table-hover myRightNote">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Note name</th>
+                    <th scope="col">Creation date</th>
+                </tr>
+                </thead>
+                <tbody>
 
-<!--<div>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Note name</th>
-            <th scope="col">Creation date</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr class="table-info" th:each="note: ${notes}">
-            <th scope="row"></th>
-            <td th:text="${note.name}">name</td>
-            <td th:text="${note.creationDate}">date</td>
-        </tr>
-        </tbody>
-    </table>
-</div>-->
-<div class="container">
-<div class="card text-white bg-info mb-3" style="max-width: 20rem;" th:each="note: ${notes}">
-    <div class="card-header" th:text="${note.name}"></div>
-    <div class="card-body">
-        <h4 class="card-title" th:text="${note.description}"></h4>
-        <p class="card-text" style="font-size: x-small" th:text="${note.creationDate}"></p>
+                <tr class="table-info" th:each="note: ${notes}">
+                    <td th:text="${notes.indexOf(note) + 1}"></td>
+                    <td th:text="${note.name}">name</td>
+                    <td th:text="${note.creationDate}">date</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 </div>
 
 <footer th:replace="fragments/footer::footer"></footer>
 
 </body>
 </html>
+
+
+
