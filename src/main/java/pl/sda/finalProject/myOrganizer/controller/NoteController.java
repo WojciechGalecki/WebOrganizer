@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import pl.sda.finalProject.myOrganizer.dao.INoteRepository;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
 import pl.sda.finalProject.myOrganizer.entity.Note;
 import pl.sda.finalProject.myOrganizer.service.NoteService;
@@ -24,6 +22,8 @@ public class NoteController {
     private NoteService noteService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private INoteRepository noteRepository;
 
     @GetMapping("/organizer/notes")
     public String showNotesPage(Model model, Principal principal) {
@@ -44,6 +44,31 @@ public class NoteController {
             return "redirect:/organizer/notes";
         }
         noteService.addNote(newNote);
+        return "redirect:/organizer/notes";
+    }
+
+    @GetMapping("/organizer/notes/edit")
+    public String prepareToEdit(Model model){
+        Note newNote = new Note();
+        model.addAttribute("editNote", newNote);
+        return "redirect:/organizer/notes";
+    }
+
+    @PostMapping("/organizer/notes/edit")
+    public String editNote(@Valid @ModelAttribute("editNote") Note editNote, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/organizer/notes/edit";
+        }
+        noteService.addNote(editNote);
+        return "redirect:/organizer/notes";
+    }
+
+    @GetMapping(path = "/organizer/notes/delete/{id}")
+    public String deleteNote(@PathVariable("id") Long id) {
+        if (noteRepository.findOne(id) == null) {
+            return "noteNotFound";
+        }
+        noteRepository.delete(id);
         return "redirect:/organizer/notes";
     }
 }
