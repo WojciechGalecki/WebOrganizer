@@ -8,67 +8,142 @@
     <title>Users</title>
 </head>
 <body>
+
 <header th:replace="fragments/header::header"></header>
 
 <div class="container myContainer">
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">User Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Password (coded)</th>
-            <th scope="col">Role</th>
-            <th scope="col">Operations</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="table-dark" th:each="user: ${users}">
-            <td th:text="${users.indexOf(user) + 1}"></td>
-            <td th:text="${user.userName}">name</td>
-            <td th:text="${user.email}">email</td>
-            <td th:text="${user.password}">password</td>
-            <td th:text="${user.userRole}">role</td>
-            <td>
-                <form th:action="@{/organizer/users/edit}" method="get">
-                    <input type="hidden" name="email" th:value="${user.email}"/>
-                    <input type="submit" value="EDIT" /><!--th:href="@{/organizer/users/edit}"-->
-                </form>
-            </td>
-            <td>
-                <form th:action="@{/organizer/users/delete}" method="post">
-                    <input type="hidden" name="email" th:value="${user.email}"/>
-                    <input type="submit" value="DELETE" class="btn btn-outline-danger"/>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-    <hr/>
-<!--TODO fix pagination -->
-    <div>
-        <ul class="pagination">
-            <li class="page-item" th:each="i: ${#numbers.sequence(1,pages.totalPages)}">
-                <a class="page-link" th:href="@{organizer/users/(page=${i})}"
-                   th:text="${i}" th:classappend="${currentPage == i} ? 'active' : ''">#</a>
-            </li>
-        </ul>
+    <button class="btn btn-success newBtn">ADD</button>
+    <div class="card">
+        <div class="card-block">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Password (coded)</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Operations</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="table-dark" th:each="user: ${users}">
+                    <td th:text="${users.indexOf(user) + 1}"></td>
+                    <td th:text="${user.userName}">name</td>
+                    <td th:text="${user.email}">email</td>
+                    <td th:text="${user.password}">password</td>
+                    <td th:text="${user.userRole}">role</td>
+                    <td><a th:href="@{/organizer/users/edit/(email=${user.email})}"
+                           class="btn btn-primary myBtn">EDIT</a></td>
+                    <td>
+                        <form th:action="@{/organizer/users/delete}" method="post">
+                            <input type="hidden" name="email" th:value="${user.email}"/>
+                            <input type="submit" value="DELETE" class="btn btn-outline-danger"/>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+</div>
+
+<div class="myModal">
+    <form th:action="@{/organizer/users/edit}" method="get">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">EDIT</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="userName" class="form-control-label">Name</label>
+                            <input type="text" class="form-control" id="userName" name="userName" value=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-control-label">Email</label>
+                            <input type="text" class="form-control" id="email" name="email" value=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-control-label">Password</label>
+                            <input type="text" class="form-control" id="password" name="password" value=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="userRole">Role</label>
+                            <select class="form-control" id="userRole" name="userRole">
+                                <option>USER</option>
+                                <option>ADMIN</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input th:href="@{/organizer/users/edit}" type="submit" class="btn btn-primary" value="SUBMIT"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<hr/>
+<!--TODO fix pagination -->
+<div>
+    <ul class="pagination">
+        <li class="page-item" th:each="i: ${#numbers.sequence(1,pages.totalPages)}">
+            <a class="page-link" th:href="@{organizer/users/(page=${i})}"
+               th:text="${i}" th:classappend="${currentPage == i} ? 'active' : ''">#</a>
+        </li>
+    </ul>
+</div>
 <hr/>
 
 
-    <footer th:replace="fragments/footer::footer"></footer>
+<footer th:replace="fragments/footer::footer"></footer>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-            crossorigin="anonymous"></script>
+<script
+        src="https://code.jquery.com/jquery-2.2.3.min.js"
+        integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+        integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+        integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" th:href="@{/js/script.js}" href="../static/js/script.js"></script>
+<script>
+    $(document).ready(function () {
 
+        $('.table .myBtn .newBtn').on('click', function (event) {
+
+            event.preventDefault();
+            var href = $(this).attr('href');
+            var text = $(this).text();
+            if (text == 'EDIT') {
+                $.get(href, function (user, status) {
+
+                    $('.myModal #userName').value(user.userName);
+                    $('.myModal #password').value(user.password);
+                    $('.myModal #email').value(user.email);
+                    $('.myModal #userRole').value(user.userRole);
+                });
+
+                $('.myModal #exampleModal').modal();
+            } else {
+
+                $('.myModal #userName').value('');
+                $('.myModal #password').value('');
+                $('.myModal #email').value('');
+                $('.myModal #userRole').value('USER');
+                $('.myModal #exampleModal').modal();
+            }
+        });
+    });
+</script>
 </body>
 </html>

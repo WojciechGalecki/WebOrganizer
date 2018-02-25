@@ -16,7 +16,6 @@ import pl.sda.finalProject.myOrganizer.service.UserService;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/organizer")
 public class AdminController {
 
     @Autowired
@@ -24,7 +23,7 @@ public class AdminController {
     @Autowired
     private IUserRepository userRepository;
 
-    @GetMapping(path = "/users")
+    @GetMapping("/organizer/users")
     public String showUsers(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
         model.addAttribute("users", userService.findAllUsers());
         model.addAttribute("pages", userRepository.findAll(new PageRequest(page, 4)));
@@ -32,7 +31,7 @@ public class AdminController {
         return "users";
     }
 
-    @PostMapping("/users/delete")
+    @PostMapping("organizer/users/delete")
     public String deleteUser(@RequestParam("email") String email) {
         if (userService.findUserByEmail(email) == null) {
             return "userNotFound";
@@ -41,30 +40,9 @@ public class AdminController {
         return "redirect:/organizer/users";
     }
 
-    @GetMapping("/users/edit")
-    public String showEditForm(@RequestParam("email") String email, Model model) {
-        MyUser editedUser = userService.findUserByEmail(email);
-        if (editedUser == null) {
-            return "userNotFound";
-        }
-        UserModel editedModel = new UserModel(editedUser);
-        model.addAttribute("edited", editedModel);
-        return "redirect:/organizer/users";
-    }
-
-    @PostMapping("users/edit")
-    public String editUser(@Valid @ModelAttribute("edited") UserModel editedModel, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "redirect:/edit";
-        }
-        MyUser editedUser = userService.findUserByEmail(editedModel.getEmail());
-
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-        editedUser.setUserName(editedModel.getUserName());
-        editedUser.setPassword(passwordEncoder.encode(editedModel.getPassword()));
-        editedUser.setUserRole(editedModel.getUserRole());
-        userRepository.save(editedUser);
-        return "edit";
+    @GetMapping("organizer/users/edit")
+    @ResponseBody
+    public MyUser findUser(String email){
+        return userService.findUserByEmail(email);
     }
 }
