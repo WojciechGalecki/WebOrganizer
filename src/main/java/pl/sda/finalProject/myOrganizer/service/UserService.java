@@ -31,7 +31,6 @@ public class UserService {
 
     private void createUserOrAdmin(UserModel userModel, UserRole userRole) {
 
-        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
 
         MyUser newUser = MyUser.builder()

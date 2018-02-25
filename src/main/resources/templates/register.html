@@ -10,11 +10,11 @@
 <body>
 <header th:replace="fragments/header::header"></header>
 
-<div class="container myContainer">
+<div class="container myRegister">
 <form th:action="@{/organizer/register}" th:object="${newUser}" method="post">
     <div class="form-group">
         <label for="userName" class="form-control-label">Name</label>
-        <input type="text" class="form-control" th:field="*{userName}" id="userName" placeholder="Enter name..."/>
+       <input type="text" class="form-control" th:field="*{userName}" id="userName" placeholder="Enter name..."/>
         <div class="text text-danger" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></div>
     </div>
     <div class="form-group">
