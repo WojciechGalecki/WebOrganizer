@@ -18,7 +18,6 @@ import java.security.Principal;
 import java.time.LocalDate;
 
 @Controller
-@RequestMapping("/organizer")
 public class NoteController {
 
     @Autowired
@@ -26,7 +25,7 @@ public class NoteController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/notes")
+    @GetMapping("/organizer/notes")
     public String showNotesPage(Model model, Principal principal) {
         Note newNote = new Note();
         MyUser activeUser = userService.findUserByEmail(principal.getName());
@@ -35,7 +34,7 @@ public class NoteController {
         return "notes";
     }
 
-    @PostMapping("/notes")
+    @PostMapping("/organizer/notes")
     public String addNote(@Valid @ModelAttribute("newNote") Note newNote, BindingResult bindingResult,
                           Principal principal) {
         MyUser activeUser = userService.findUserByEmail(principal.getName());

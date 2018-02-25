@@ -5,11 +5,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+import pl.sda.finalProject.myOrganizer.dao.INoteRepository;
+import pl.sda.finalProject.myOrganizer.dao.ITaskRepository;
 import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
 import pl.sda.finalProject.myOrganizer.entity.UserRole;
 import pl.sda.finalProject.myOrganizer.model.UserModel;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +21,10 @@ public class UserService {
 
     @Autowired
     private IUserRepository userRepository;
+    @Autowired
+    private INoteRepository noteRepository;
+    @Autowired
+    private ITaskRepository taskRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -58,8 +65,12 @@ public class UserService {
         } else return false;
     }
 
+    @Transactional
     public void deleteUser(String email){
-        userRepository.delete(email);
+        MyUser userToDelete = userRepository.findOne(email);
+        noteRepository.deleteAllByUser(userToDelete);
+        taskRepository.deleteAllByUser(userToDelete);
+        userRepository.delete(userToDelete);
     }
 
 }

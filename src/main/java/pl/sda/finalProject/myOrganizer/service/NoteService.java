@@ -22,7 +22,10 @@ public class NoteService {
         noteRepository.save(note);
     }
 
-    public List<Note> findNotesByUser(MyUser user){
+    public List<Note> findNotesByUser(MyUser user) {
         return noteRepository.findByUser(user);
     }
+
 }
+
+

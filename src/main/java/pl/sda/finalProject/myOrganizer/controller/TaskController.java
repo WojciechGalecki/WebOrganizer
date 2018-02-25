@@ -36,7 +36,7 @@ public class TaskController {
     }
 
     @PostMapping("/tasks")
-    public String addNote(@Valid @ModelAttribute("newTask") Task newTask, BindingResult bindingResult,
+    public String addTask(@Valid @ModelAttribute("newTask") Task newTask, BindingResult bindingResult,
                           Principal principal) {
         MyUser activeUser = userService.findUserByEmail(principal.getName());
         newTask.setUser(activeUser);
