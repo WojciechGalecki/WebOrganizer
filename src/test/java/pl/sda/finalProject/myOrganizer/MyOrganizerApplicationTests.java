@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
-import pl.sda.finalProject.myOrganizer.entity.MyUser;
 import pl.sda.finalProject.myOrganizer.service.UserService;
 
 import static org.junit.Assert.assertEquals;
