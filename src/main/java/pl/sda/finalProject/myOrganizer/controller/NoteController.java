@@ -41,7 +41,7 @@ public class NoteController {
         newNote.setUser(activeUser);
         newNote.setCreationDate(LocalDate.now());
         if (bindingResult.hasErrors()) {
-            return "organizer/notes";
+            return "notes";
         }
         noteService.addNote(newNote);
         return "redirect:/organizer/notes";

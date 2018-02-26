@@ -21,8 +21,8 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
-    @Size(max = 1000)
+    //@NotEmpty
+    //@Size(max = 1000)
     private String name;
 
     private LocalDate creationDate;

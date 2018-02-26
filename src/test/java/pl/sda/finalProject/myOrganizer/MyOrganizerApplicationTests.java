@@ -6,8 +6,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import pl.sda.finalProject.myOrganizer.dao.ITaskRepository;
 import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
+import pl.sda.finalProject.myOrganizer.entity.Task;
 import pl.sda.finalProject.myOrganizer.service.UserService;
 
 import static org.junit.Assert.assertEquals;
@@ -24,6 +26,8 @@ public class MyOrganizerApplicationTests {
     private UserService userService;
     @Autowired
     private IUserRepository userRepository;
+    @Autowired
+    ITaskRepository taskRepository;
 
     @Before
     public void initDB() {
@@ -58,4 +62,13 @@ public class MyOrganizerApplicationTests {
         String email1 = userService.findUserByEmail("user@user.pl").getEmail();
         assertEquals(email1,"user@user.pl");
     }
+
+
+   /* @Test
+    public void deleteTaskById(){
+        Task newTask = Task.builder().id(100l).build();
+        taskRepository.save(newTask);
+        taskRepository.delete(newTask.getId());
+        assertTrue(taskRepository.findOne(newTask.getId()) == null);
+    }*/
 }
