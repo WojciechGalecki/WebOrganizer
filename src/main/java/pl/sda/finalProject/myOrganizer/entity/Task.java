@@ -29,6 +29,9 @@ public class Task {
 
     private boolean isActive;
 
+    @Enumerated(EnumType.STRING)
+    private PriorityType priority;
+
     @ManyToOne
     private MyUser user;
 }
