@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -12,24 +11,17 @@
 <body>
 <header th:replace="fragments/header::header"></header>
 
+<h4 class="myContainer">CALENDAR</h4>
+<hr/>
 <div class="container-fluid myLinks">
-    <div class="row">
-        <div class="col-sm-4">
-            <a class="btn btn-info myNotesLink" href="/organizer/notes" role="button"><h3>NOTES</h3>
-                <h5>Write something...</h5></a>
-        </div>
-        <div class="col-sm-4">
-            <a class="btn btn-success myNotesLink" href="/organizer/tasks" role="button"><h3>TASKS</h3>
-                <h5>Make TODO list...</h5></a>
-        </div>
-        <div class="col-sm-4">
-            <a class="btn btn-danger myNotesLink" href="/organizer/calendar" role="button"><h3>CALENDAR</h3>
-                <h5>Add events...</h5></a>
-        </div>
-        <div class="col-sm-4">
 
-        </div>
-    </div>
+    <form th:action="@{/organizer/calendar}" method="post" name="date">
+
+        <input class="myDate" type="date" name="date"/>
+        <button type="subbmit" class="btn btn-primary">Add Event</button>
+    </form>
+
+
 </div>
 
 
