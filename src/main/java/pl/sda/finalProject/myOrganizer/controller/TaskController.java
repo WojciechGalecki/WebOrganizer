@@ -42,7 +42,7 @@ public class TaskController {
         newTask.setUser(activeUser);
         newTask.setCreationDate(LocalDate.now());
         if (bindingResult.hasErrors()) {
-            return "redirect:/organizer/tasks";
+            return "organizer/tasks";
         }
         taskService.addTask(newTask);
         return "redirect:/organizer/tasks";

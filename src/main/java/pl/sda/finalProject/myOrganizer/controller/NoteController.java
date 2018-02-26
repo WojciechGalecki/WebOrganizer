@@ -41,7 +41,7 @@ public class NoteController {
         newNote.setUser(activeUser);
         newNote.setCreationDate(LocalDate.now());
         if (bindingResult.hasErrors()) {
-            return "redirect:/organizer/notes";
+            return "organizer/notes";
         }
         noteService.addNote(newNote);
         return "redirect:/organizer/notes";
@@ -68,7 +68,7 @@ public class NoteController {
             return "noteNotFound";
         }
         if (bindingResult.hasErrors()) {
-            return "redirect:/organizer/notes/edit/{id}";
+            return "organizer/notes/edit/{id}";
         }
         entity.setDescription(editNote.getDescription());
         noteService.addNote(entity);

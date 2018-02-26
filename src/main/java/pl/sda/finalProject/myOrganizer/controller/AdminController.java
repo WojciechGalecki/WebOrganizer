@@ -1,7 +1,9 @@
 package pl.sda.finalProject.myOrganizer.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,10 +27,10 @@ public class AdminController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/organizer/users")
-    public String showUsers(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
-        model.addAttribute("users", userService.findAllUsers());
-        model.addAttribute("pages", userRepository.findAll(new PageRequest(page, 10)));
-        model.addAttribute("currentPage", page);
+    public String showUsers(Model model, Pageable pageRequest) {
+        Page<MyUser> page = userRepository.findAll(pageRequest);
+        model.addAttribute("pages", page);
+        model.addAttribute("users", page.getContent());
         return "users";
     }
 

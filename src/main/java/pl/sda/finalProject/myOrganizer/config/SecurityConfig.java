@@ -43,13 +43,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .passwordParameter("password")
                 .usernameParameter("username")
-                //TODO not default login address
-                //.loginPage("/login")
+                .loginPage("/organizer/login")
                 .loginProcessingUrl("/loginProcessing")
                 .failureUrl("/login-failure")
                 .defaultSuccessUrl("/organizer").and()
-                //TODO logout view
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/login").and()
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/organizer/login").and()
                 .exceptionHandling().accessDeniedPage("/access-denied").and()
                 .httpBasic().disable();
     }

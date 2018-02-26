@@ -43,7 +43,7 @@ public class UserController {
                     "User with this email already exists!"));
         }
         if (bindingResult.hasErrors()) {
-            return "redirect:/organizer/register";
+            return "register";
         }
         userService.registerUser(newUser);
         return "success";
@@ -56,7 +56,7 @@ public class UserController {
         return "profile";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/organizer/login")
     public String showLoginForm() {
         return "login";
     }

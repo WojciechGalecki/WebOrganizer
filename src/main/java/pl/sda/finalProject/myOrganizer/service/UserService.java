@@ -25,6 +25,7 @@ public class UserService {
     private INoteRepository noteRepository;
     @Autowired
     private ITaskRepository taskRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 

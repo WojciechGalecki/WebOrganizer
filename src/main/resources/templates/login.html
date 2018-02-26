@@ -15,7 +15,7 @@
     <div class="alert alert-danger" th:if="${param.error}">
         <strong class="text text-center">Invalid Email or Password!</strong>
     </div>
-    <form th:action="@{/login}" method="post">
+    <form th:action="@{/loginProcessing}" method="post">
         <div class="form-group">
             <label for="email" class="form-control-label">Email</label>
             <input type="text" class="form-control" id="email" name="username" placeholder="Enter email..."/>

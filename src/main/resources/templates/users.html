@@ -39,9 +39,9 @@
 <!--TODO fix pagination -->
 <div>
     <ul class="pagination">
-        <li class="page-item" th:each="i: ${#numbers.sequence(1,pages.totalPages)}">
+        <li class="page-item" th:each="i: ${#numbers.sequence(0,pages.totalPages - 1)}">
             <a class="page-link" th:href="@{/organizer/users/(page=${i})}"
-               th:text="${i}" th:classappend="${currentPage == i} ? 'active' : ''">#</a>
+               th:text="${i+1}" th:classappend="${pages.getNumber() == i} ? 'active' : ''">#</a>
         </li>
     </ul>
 </div>
