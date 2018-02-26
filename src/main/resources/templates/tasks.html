@@ -10,7 +10,9 @@
 <header th:replace="fragments/header::header"></header>
 
 <div class="container myContainer">
-    <h4>My Tasks</h4> <vr/> <button type="button" class="btn btn-primary btn-lg" id="myTaskBtn">Add Task</button>
+    <h4>My Tasks</h4>
+    <vr/>
+    <button type="button" class="btn btn-primary btn-lg" id="myTaskBtn">Add Task</button>
     <hr/>
     <table class="table table-hover">
         <thead>
@@ -19,6 +21,8 @@
             <th scope="col">Task name</th>
             <th scope="col">Creation date</th>
             <th scope="col">Priority</th>
+            <th scope="col"></th>
+
         </tr>
         </thead>
         <tbody>
@@ -28,7 +32,15 @@
             <td th:text="${task.name}">name</td>
             <td th:text="${task.creationDate}">date</td>
             <td th:text="${task.priority}">priority</td>
-            <td><a class="btn btn-outline-danger" th:href="@{/organizer/tasks/delete/{id}(id=${task.id})}">Delete</a></td>
+            <td>
+                <div class="form-group">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" value="" name=""/>
+                    </label>
+                </div>
+            </td>
+            <td><a class="btn btn-outline-danger" th:href="@{/organizer/tasks/delete/{id}(id=${task.id})}">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -44,45 +56,45 @@
                 </button>
             </div>
             <form role="form" id="addTaskForm" th:action="@{/organizer/tasks}" method="post">
-            <div class="modal-body">
-                <div class="form-group">
+                <div class="modal-body">
+                    <div class="form-group">
                         <label class="control-label col-md-3" for="name">Your task</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="TODO..." />
+                            <input type="text" class="form-control" id="name" name="name" placeholder="TODO..."/>
                         </div>
                     </div>
-                <fieldset class="form-group">
-                    <legend>Priority</legend>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="priority" value="NONE" checked=""/>
-                            NONE
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="priority" value="LOW"/>
-                            LOW
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="priority" value="MEDIUM"/>
-                            MEDIUM
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="priority" value="HIGH"/>
-                            HIGH
-                        </label>
-                    </div>
-                </fieldset>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+                    <fieldset class="form-group">
+                        <legend>Priority</legend>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="priority" value="NONE" checked=""/>
+                                NONE
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="priority" value="LOW"/>
+                                LOW
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="priority" value="MEDIUM"/>
+                                MEDIUM
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="priority" value="HIGH"/>
+                                HIGH
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </form>
         </div>
     </div>
@@ -91,13 +103,12 @@
 <footer th:replace="fragments/footer::footer"></footer>
 
 
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script>
-    $(document).ready(function(){
-        $("#myTaskBtn").click(function(){
+    $(document).ready(function () {
+        $("#myTaskBtn").click(function () {
 
             $("#addTaskModal").modal();
 

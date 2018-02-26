@@ -32,6 +32,8 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private PriorityType priority;
 
+    private int PriorityValue;
+
     @ManyToOne
     private MyUser user;
 }

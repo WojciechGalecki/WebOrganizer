@@ -31,6 +31,7 @@ public class TaskController {
         MyUser activeUser = userService.findUserByEmail(principal.getName());
         model.addAttribute("newTask", newTask);
         model.addAttribute("tasks",taskService.findTasksByUser(activeUser));
+        //model.addAttribute("priorityTasks", taskService.sortUserTasksByPriority(activeUser));
         return "tasks";
     }
 

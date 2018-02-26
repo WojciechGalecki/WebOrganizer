@@ -12,4 +12,5 @@ public interface ITaskRepository extends JpaRepository<Task, Long> {
 
     List<Task> findByUser(MyUser user);
     void deleteAllByUser(MyUser user);
+    //List<Task> orderByPriorityValueDesc(List<Task> tasksToSort);
 }
