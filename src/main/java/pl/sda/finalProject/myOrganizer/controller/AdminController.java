@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
@@ -41,19 +42,28 @@ public class AdminController {
         return "redirect:/organizer/users";
     }
 
-    @GetMapping("organizer/users/edit")
+   /* @GetMapping("organizer/users/edit")
     @ResponseBody
     public MyUser findUser(String email) {
         return userService.findUserByEmail(email);
+    }*/
+
+    @PostMapping("organizer/users/edit")
+    //@ResponseBody
+    public String test(@Validated @ModelAttribute String userName, String email, String password, String userRole, BindingResult b){
+        if(b.hasErrors()){
+            return "redirect:/users/edit";
+        }
+
+        MyUser user = MyUser.builder()
+                .userName(userName)
+                .email(email)
+                .password(password)
+                .userRole(UserRole.valueOf(userRole)).build();
+        userRepository.save(user);
+        return "redirect:/organizer/users";
     }
 
-    @PostMapping(path = "/organizer/users/edit/{email}")
-    public String test(@PathVariable("email") String email){
-        MyUser user = userService.findUserByEmail(email);
-        user.setUserName("AAAAAAAAAAAAAAAAAA");
-        userRepository.save(user);
-        return "/organizer/users";
-    }
 }
 
    
