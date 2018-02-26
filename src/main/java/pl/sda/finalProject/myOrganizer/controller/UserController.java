@@ -44,7 +44,7 @@ public class UserController {
                     "User with this email already exists!"));
         }
         if (bindingResult.hasErrors()) {
-            return "redirect:/register";
+            return "redirect:/organizer/register";
         }
         userService.registerUser(newUser);
         return "success";

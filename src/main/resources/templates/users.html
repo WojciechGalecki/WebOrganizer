@@ -70,7 +70,7 @@
                         </div>
                         <div class="form-group">
                             <label for="password" class="form-control-label">Password</label>
-                            <input type="text" class="form-control" id="password" name="password" value=""/>
+                            <input type="password" class="form-control" id="password" name="password" value=""/>
                         </div>
                         <div class="form-group">
                             <label for="userRole">Role</label>
@@ -122,9 +122,8 @@
 
             event.preventDefault();
             var href = $(this).attr('href');
-            var text = $(this).text();
 
-            $.get(href, function (user, status) {
+            $.get(href, function (user) {
 
                 $('.myModal #userName').value(user.userName);
                 $('.myModal #password').value(user.password);

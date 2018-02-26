@@ -43,8 +43,17 @@ public class AdminController {
 
     @GetMapping("organizer/users/edit")
     @ResponseBody
-    public MyUser findUser(String email){
+    public MyUser findUser(String email) {
         return userService.findUserByEmail(email);
     }
+
+    @PostMapping(path = "/organizer/users/edit/{email}")
+    public String test(@PathVariable("email") String email){
+        MyUser user = userService.findUserByEmail(email);
+        user.setUserName("AAAAAAAAAAAAAAAAAA");
+        userRepository.save(user);
+        return "/organizer/users";
+    }
+}
 
    
