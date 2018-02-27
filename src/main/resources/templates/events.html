@@ -13,7 +13,7 @@
 
 
 <div class="container-fluid myLinks">
-    <h4 class="myContainer">CALENDAR</h4>
+    <h4 class="myContainer">My Events</h4>
     <hr/>
     <button type="button" class="btn btn-primary btn-lg" id="myEventBtn">Add Event</button>
 </div>
@@ -27,7 +27,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form role="form" id="addEventForm" th:action="@{/organizer/calendar}" method="post">
+            <form role="form" id="addEventForm" th:action="@{/organizer/events}" method="post">
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="control-label col-md-3" for="date">Pick date</label>

@@ -58,7 +58,7 @@ public class AdminController {
             return "userNotFound";
         }
         if (bindingResult.hasErrors()) {
-            return "redirect:/organizer/users/edit/{email}";
+            return "editUser";
         }
 
         entity.setUserName(editModel.getUserName());

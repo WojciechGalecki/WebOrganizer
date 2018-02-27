@@ -1,4 +1,4 @@
-package pl.sda.finalProject.myOrganizer.entity;
+package pl.sda.finalProject.myOrganizer.entityAttributes;
 
 public enum PriorityType {
 

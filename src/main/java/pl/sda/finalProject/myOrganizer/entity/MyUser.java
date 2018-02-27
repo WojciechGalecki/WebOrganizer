@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.sda.finalProject.myOrganizer.entityAttributes.UserRole;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -31,4 +33,7 @@ public class MyUser {
 
     @OneToMany(mappedBy = "user")
     private List<Task> tasks;
+
+    @OneToMany(mappedBy = "user")
+    private List<Event> events;
 }

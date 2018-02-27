@@ -5,17 +5,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
-import pl.sda.finalProject.myOrganizer.entityAttributes.PriorityType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Task {
+public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,12 +27,14 @@ public class Task {
 
     private LocalDate creationDate;
 
-    private boolean isActive;
+    @NotNull
+    private LocalDate eventDate;
 
-    @Enumerated(EnumType.STRING)
-    private PriorityType priority;
+    private LocalTime eventTime;
+
+    @OneToOne
+    private Reminder reminder;
 
     @ManyToOne
     private MyUser user;
-
 }

@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class CalendarController {
+public class EventController {
 
-    @GetMapping("/organizer/calendar")
-    public String showCalendarPage(){
-        return "calendar";
+    @GetMapping("/organizer/events")
+    public String showEventsPage(){
+        return "events";
     }
 }

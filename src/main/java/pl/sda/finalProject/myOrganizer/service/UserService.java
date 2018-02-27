@@ -1,19 +1,16 @@
 package pl.sda.finalProject.myOrganizer.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import pl.sda.finalProject.myOrganizer.dao.INoteRepository;
 import pl.sda.finalProject.myOrganizer.dao.ITaskRepository;
 import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
-import pl.sda.finalProject.myOrganizer.entity.UserRole;
+import pl.sda.finalProject.myOrganizer.entityAttributes.UserRole;
 import pl.sda.finalProject.myOrganizer.model.UserModel;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

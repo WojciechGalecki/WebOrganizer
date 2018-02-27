@@ -8,9 +8,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
 import pl.sda.finalProject.myOrganizer.entity.Note;
 import pl.sda.finalProject.myOrganizer.entity.Task;
-import pl.sda.finalProject.myOrganizer.entity.UserRole;
+import pl.sda.finalProject.myOrganizer.entityAttributes.UserRole;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
