@@ -21,6 +21,7 @@
         <thead>
         <tr>
             <th scope="col">#</th>
+            <th scope="col"></th>
             <th scope="col">Task name</th>
             <th scope="col">Creation date</th>
             <th scope="col">Priority</th>
@@ -30,8 +31,9 @@
         </thead>
         <tbody>
 
-        <tr class="table-info" th:each="task: ${tasks}">
+        <tr class="table-info" th:each="task: ${tasks}" th:classappend="${task.isActive()} ? myTaskDone : ''">
             <td th:text="${tasks.indexOf(task) + 1}"></td>
+            <td><a class="btn btn-outline-secondary" th:href="@{/organizer/tasks/done/{id}(id=${task.id})}">Done</a></td>
             <td th:text="${task.name}">name</td>
             <td th:text="${task.creationDate}">date</td>
             <td th:text="${task.priority}">priority</td>

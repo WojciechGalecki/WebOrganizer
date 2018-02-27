@@ -98,5 +98,12 @@
 }
 
 
+.myTaskDone  {
+    text-decoration: line-through;
+}
+.myTaskDone td {
+    background: #888;
+    color: #fff;
+}
 
 

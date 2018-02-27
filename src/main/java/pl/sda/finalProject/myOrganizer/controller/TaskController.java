@@ -85,10 +85,28 @@ public class TaskController {
 
     @GetMapping(path = "organizer/tasks/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
+
         if (taskRepository.findOne(id) == null) {
             return "taskNotFound";
         }
         taskRepository.delete(id);
+
+        return "redirect:/organizer/tasks";
+    }
+
+    @GetMapping(path = "/organizer/tasks/done/{id}")
+    public String setTaskDone(@PathVariable("id") Long id){
+
+        if (taskRepository.findOne(id) == null) {
+            return "taskNotFound";
+        }
+        Task doneTask = taskRepository.findOne(id);
+        if(doneTask.isActive()) {
+            doneTask.setActive(false);
+        } else {
+            doneTask.setActive(true);
+        }
+        taskRepository.save(doneTask);
 
         return "redirect:/organizer/tasks";
     }

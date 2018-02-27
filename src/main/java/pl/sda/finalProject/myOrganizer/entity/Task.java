@@ -33,4 +33,5 @@ public class Task {
 
     @ManyToOne
     private MyUser user;
+
 }
