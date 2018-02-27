@@ -10,7 +10,7 @@
 <body>
 <header th:replace="fragments/header::header"></header>
 
-<div class="container myContainer">
+<div class="container myRegister">
     <form action="#" th:action="@{/organizer/users/edit/{email}(email=*{email})}" th:object="${edit}" method="post">
         <div class="form-group">
             <label for="userName" class="form-control-label">Name</label>
@@ -30,6 +30,7 @@
             </select>
         </div>
         <input type="submit" value="EDIT" class="btn btn-primary"/>
+        <a class="btn btn-success" th:href="@{/organizer/users}">Back to users list</a>
     </form>
 </div>
 

@@ -19,7 +19,8 @@
             <th scope="col">Email</th>
             <th scope="col">Password (coded)</th>
             <th scope="col">Role</th>
-            <th scope="col">Operations</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -29,8 +30,8 @@
             <td th:text="${user.email}">email</td>
             <td th:text="${user.password}">password</td>
             <td th:text="${user.userRole}">role</td>
-            <td><a class="btn btn-outline-warning" th:href="@{/organizer/users/edit/{email}(email=${user.email})}">EDIT</a></td>
-            <td><a class="btn btn-outline-danger" th:href="@{/organizer/users/delete/{email}(email=${user.email})}">DELETE</a></td>
+            <td><a class="btn btn-outline-warning" th:href="@{/organizer/users/edit/{email}(email=${user.email})}">Edit</a></td>
+            <td><a class="btn btn-outline-danger" th:href="@{/organizer/users/delete/{email}(email=${user.email})}">Delete</a></td>
         </tr>
         </tbody>
     </table>

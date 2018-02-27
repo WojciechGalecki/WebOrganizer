@@ -14,6 +14,7 @@ import pl.sda.finalProject.myOrganizer.service.UserService;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.Arrays;
 
 @Controller
 public class TaskController {
@@ -48,16 +49,6 @@ public class TaskController {
         return "redirect:/organizer/tasks";
     }
 
-    @GetMapping(path = "organizer/tasks/delete/{id}")
-    public String deleteUser(@PathVariable("id") Long id) {
-        if (taskRepository.findOne(id) == null) {
-            return "taskNotFound";
-        }
-        taskRepository.delete(id);
-
-        return "redirect:/organizer/tasks";
-    }
-
     @GetMapping(path = "/organizer/tasks/edit/{id}")
     public String showEditForm(@PathVariable("id") Long id, Model model) {
 
@@ -70,5 +61,35 @@ public class TaskController {
         model.addAttribute("edit", editTask);
 
         return "editTask";
+    }
+
+    @PostMapping(path = "/organizer/tasks/edit/{id}")
+    public String editTask(@PathVariable("id") Long id, @Valid @ModelAttribute("edit") Task editTask,
+                           BindingResult bindingResult) {
+
+        Task entityTask = taskRepository.findOne(id);
+
+        if (entityTask == null) {
+            return "taskNotFound";
+        }
+        if (bindingResult.hasErrors()) {
+            return "redirect:/organizer/tasks/edit/{id}";
+        }
+        entityTask.setCreationDate(LocalDate.now());
+        entityTask.setName(editTask.getName());
+        entityTask.setPriority(editTask.getPriority());
+        taskRepository.save(entityTask);
+
+        return "redirect:/organizer/tasks";
+    }
+
+    @GetMapping(path = "organizer/tasks/delete/{id}")
+    public String deleteUser(@PathVariable("id") Long id) {
+        if (taskRepository.findOne(id) == null) {
+            return "taskNotFound";
+        }
+        taskRepository.delete(id);
+
+        return "redirect:/organizer/tasks";
     }
 }
