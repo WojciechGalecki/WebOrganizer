@@ -36,7 +36,7 @@ public class AdminController {
 
     @GetMapping(path = "/organizer/users/edit/{email}")
     public String showEditForm(@PathVariable("email") String email, Model model) {
-        MyUser editUser = userService.findUserByEmail(email);
+        MyUser editUser = userRepository.findOne(email);
 
         if (editUser == null) {
             return "userNotFound";
@@ -52,7 +52,7 @@ public class AdminController {
     public String editUser(@PathVariable("email") String email, @Valid @ModelAttribute("edit") UserModel editModel,
                            BindingResult bindingResult) {
 
-        MyUser entity = userService.findUserByEmail(email);
+        MyUser entity = userRepository.findOne(email);
 
         if (entity == null) {
             return "userNotFound";
@@ -72,7 +72,7 @@ public class AdminController {
 
     @GetMapping(path = "organizer/users/delete/{email}")
     public String deleteUser(@PathVariable("email") String email) {
-        if (userService.findUserByEmail(email) == null) {
+        if (userRepository.findOne(email) == null) {
             return "userNotFound";
         }
         userService.deleteUser(email);

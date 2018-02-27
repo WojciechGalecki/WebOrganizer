@@ -6,10 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.sda.finalProject.myOrganizer.dao.INoteRepository;
+import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
 import pl.sda.finalProject.myOrganizer.entity.Note;
 import pl.sda.finalProject.myOrganizer.service.NoteService;
-import pl.sda.finalProject.myOrganizer.service.UserService;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -21,14 +21,14 @@ public class NoteController {
     @Autowired
     private NoteService noteService;
     @Autowired
-    private UserService userService;
+    private IUserRepository userRepository;
     @Autowired
     private INoteRepository noteRepository;
 
     @GetMapping("/organizer/notes")
     public String showNotesPage(Model model, Principal principal) {
         Note newNote = new Note();
-        MyUser activeUser = userService.findUserByEmail(principal.getName());
+        MyUser activeUser = userRepository.findOne(principal.getName());
         model.addAttribute("newNote", newNote);
         model.addAttribute("notes", noteService.findNotesByUser(activeUser));
         return "notes";
@@ -37,7 +37,7 @@ public class NoteController {
     @PostMapping("/organizer/notes")
     public String addNote(@Valid @ModelAttribute("newNote") Note newNote, BindingResult bindingResult,
                           Principal principal) {
-        MyUser activeUser = userService.findUserByEmail(principal.getName());
+        MyUser activeUser = userRepository.findOne(principal.getName());
         newNote.setUser(activeUser);
         newNote.setCreationDate(LocalDate.now());
         if (bindingResult.hasErrors()) {

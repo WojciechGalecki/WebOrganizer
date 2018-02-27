@@ -103,9 +103,8 @@ public class TaskController {
         Task doneTask = taskRepository.findOne(id);
         if(doneTask.isActive()) {
             doneTask.setActive(false);
-        } else {
-            doneTask.setActive(true);
         }
+        doneTask.setActive(true);
         taskRepository.save(doneTask);
 
         return "redirect:/organizer/tasks";

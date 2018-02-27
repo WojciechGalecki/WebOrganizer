@@ -48,14 +48,6 @@ public class UserService {
 
     }
 
-    public MyUser findUserByEmail(String email) {
-        return userRepository.findOne(email);
-    }
-
-    public List<MyUser> findAllUsers() {
-        return userRepository.findAll();
-    }
-
     public boolean isUserExist(String email) {
         MyUser user = userRepository.findOne(email);
         if (user != null) {
