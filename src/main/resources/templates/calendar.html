@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"/>
+    <title>Organizer</title>
+</head>
+<body>
+<header th:replace="fragments/header::header"></header>
+
+
+<div class="container-fluid myLinks">
+    <h4 class="myContainer">CALENDAR</h4>
+    <hr/>
+    <button type="button" class="btn btn-primary btn-lg" id="myEventBtn">Add Event</button>
+</div>
+
+<div class="modal myEventModal" id="addEventModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Event</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form role="form" id="addEventForm" th:action="@{/organizer/calendar}" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="date">Pick date</label>
+                        <div class="col-md-9">
+                            <input class="myDate form-control" type="date" id="date" name="date"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<footer th:replace="fragments/footer::footer"></footer>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#myEventBtn").click(function () {
+
+            $("#addEventModal").modal();
+
+
+        });
+    });
+</script>
+
+</body>
+</html>
