@@ -19,8 +19,4 @@ public class TaskService {
         task.setCreationDate(LocalDate.now());
         taskRepository.save(task);
     }
-
-    public List<Task> findTasksByUser(MyUser user) {
-        return taskRepository.findByUser(user);
-    }
 }

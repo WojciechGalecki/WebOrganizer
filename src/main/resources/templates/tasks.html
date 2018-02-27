@@ -10,8 +10,13 @@
 <header th:replace="fragments/header::header"></header>
 
 <div class="container myContainer">
-    <h4>My Tasks</h4> <vr/> <button type="button" class="btn btn-primary btn-lg" id="myTaskBtn">Add Task</button>
+    <h4>My Tasks</h4> <button type="button" class="btn btn-primary btn-lg" id="myTaskBtn">Add Task</button>
     <hr/>
+    <div class="container myContainer" th:if="${validErrors} == true">
+        <div class="alert alert-dismissible alert-danger">
+            <strong  th:text="Adding the task failed, parameter name required!"></strong>
+        </div>
+    </div>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -19,6 +24,7 @@
             <th scope="col">Task name</th>
             <th scope="col">Creation date</th>
             <th scope="col">Priority</th>
+            <th scope="col">Operations</th>
         </tr>
         </thead>
         <tbody>
@@ -28,6 +34,7 @@
             <td th:text="${task.name}">name</td>
             <td th:text="${task.creationDate}">date</td>
             <td th:text="${task.priority}">priority</td>
+            <td><a class="btn btn-outline-warning" th:href="@{/organizer/tasks/edit/{id}(id=${task.id})}">Edit</a></td>
             <td><a class="btn btn-outline-danger" th:href="@{/organizer/tasks/delete/{id}(id=${task.id})}">Delete</a></td>
         </tr>
         </tbody>
@@ -48,7 +55,7 @@
                 <div class="form-group">
                         <label class="control-label col-md-3" for="name">Your task</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="TODO..." />
+                            <input type="text" class="form-control" id="name" name="name" placeholder="TODO..." required="required"/>
                         </div>
                     </div>
                 <fieldset class="form-group">
