@@ -6,15 +6,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.sda.finalProject.myOrganizer.dao.ITaskRepository;
+import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
 import pl.sda.finalProject.myOrganizer.entity.Task;
 import pl.sda.finalProject.myOrganizer.service.TaskService;
-import pl.sda.finalProject.myOrganizer.service.UserService;
 
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDate;
-import java.util.Arrays;
 
 @Controller
 public class TaskController {
@@ -24,12 +23,12 @@ public class TaskController {
     @Autowired
     private ITaskRepository taskRepository;
     @Autowired
-    private UserService userService;
+    private IUserRepository userRepository;
 
     @GetMapping("/organizer/tasks")
     public String showTasksPage(Model model, Principal principal) {
         Task newTask = new Task();
-        MyUser activeUser = userService.findUserByEmail(principal.getName());
+        MyUser activeUser = userRepository.findOne(principal.getName());
         model.addAttribute("newTask", newTask);
         model.addAttribute("tasks", taskRepository.findByUser(activeUser));
         return "tasks";
@@ -38,13 +37,17 @@ public class TaskController {
     @PostMapping("/organizer/tasks")
     public String addTask(@Valid @ModelAttribute("newTask") Task newTask, BindingResult bindingResult,
                           Principal principal, Model model) {
-        MyUser activeUser = userService.findUserByEmail(principal.getName());
-        newTask.setUser(activeUser);
-        newTask.setCreationDate(LocalDate.now());
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("validErrors", true);
+            model.addAttribute("errorMsg",
+                    "Adding the task failed, parameter name required!");
             return "tasks";
         }
+
+        MyUser activeUser = userRepository.findOne(principal.getName());
+        newTask.setUser(activeUser);
+        newTask.setCreationDate(LocalDate.now());
         taskService.addTask(newTask);
         return "redirect:/organizer/tasks";
     }

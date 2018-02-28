@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"/>
-    <title>Organizer</title>
+    <title>Events</title>
 </head>
 <body>
 <header th:replace="fragments/header::header"></header>
@@ -14,9 +14,40 @@
 
 <div class="container-fluid myLinks">
     <h4 class="myContainer">My Events</h4>
-    <hr/>
     <button type="button" class="btn btn-primary btn-lg" id="myEventBtn">Add Event</button>
+    <hr/>
+    <div class="container myRegister" th:if="${validErrors} == true">
+        <div class="alert alert-dismissible alert-danger">
+            <strong  th:text="${errorMsg}"></strong>
+        </div>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Name</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr class="table-info" th:each="event: ${events}">
+            <td th:text="${events.indexOf(event) + 1}"></td>
+            <td th:text="${event.eventDate}">date</td>
+            <td th:text="${event.eventTime}">time</td>
+            <td th:text="${event.name}">name</td>
+            <td><a class="btn btn-outline-warning" th:href="@{/organizer/events/edit/{id}(id=${event.id})}">Edit</a></td>
+            <td><a class="btn btn-outline-danger" th:href="@{/organizer/events/delete/{id}(id=${event.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+
 
 <div class="modal myEventModal" id="addEventModal" role="dialog">
     <div class="modal-dialog" role="document">
@@ -30,10 +61,18 @@
             <form role="form" id="addEventForm" th:action="@{/organizer/events}" method="post">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="control-label col-md-3" for="date">Pick date</label>
+                        <label class="control-label col-md-3" for="eventDate">Pick date</label>
                         <div class="col-md-9">
-                            <input class="myDate form-control" type="date" id="date" name="date"/>
+                            <input class="myDate form-control" type="date" id="eventDate" name="eventDate" th:min="${today}"/>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Event name</label>
+                        <textarea class="form-control" id="name" rows="3" name="name" placeholder="My event..." required=""></textarea>
+                    </div>
+                    <hr/>
+                    <div class="alert alert-dismissible alert-info">
+                        <strong>Here you can add a reminder to your event</strong>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -61,6 +100,7 @@
 
         });
     });
+
 </script>
 
 </body>

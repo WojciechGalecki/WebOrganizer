@@ -47,19 +47,19 @@ public class MyOrganizerApplicationTests {
     public void findUserByEmail() {
         MyUser user1 = userRepository.findOne("user@user.pl");
         assertNotNull(user1);
-        MyUser user2 = userService.findUserByEmail("admin@user.pl");
+        MyUser user2 = userRepository.findOne("admin@user.pl");
         assertEquals(user2.getEmail(), "admin@user.pl");
     }
 
     @Test
     public void deleteUserByEmail() {
         userService.deleteUser("user@user.pl");
-        assertTrue(userService.findUserByEmail("user@user.pl") == null);
+        assertTrue(userRepository.findOne("user@user.pl") == null);
     }
 
     @Test
     public void getEmail(){
-        String email1 = userService.findUserByEmail("user@user.pl").getEmail();
+        String email1 = userRepository.findOne("user@user.pl").getEmail();
         assertEquals(email1,"user@user.pl");
     }
 

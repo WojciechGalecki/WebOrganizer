@@ -27,13 +27,14 @@ public class Event {
 
     private LocalDate creationDate;
 
-    @NotNull
+    //@NotEmpty
     private LocalDate eventDate;
 
     private LocalTime eventTime;
 
-    @OneToOne
-    private Reminder reminder;
+    private LocalDate reminderDate;
+
+    private LocalTime reminderTime;
 
     @ManyToOne
     private MyUser user;

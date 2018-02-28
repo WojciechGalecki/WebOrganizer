@@ -30,7 +30,7 @@ public class NoteController {
         Note newNote = new Note();
         MyUser activeUser = userRepository.findOne(principal.getName());
         model.addAttribute("newNote", newNote);
-        model.addAttribute("notes", noteService.findNotesByUser(activeUser));
+        model.addAttribute("notes", noteRepository.findByUser(activeUser));
         return "notes";
     }
 

@@ -21,11 +21,6 @@ public class NoteService {
         note.setCreationDate(LocalDate.now());
         noteRepository.save(note);
     }
-
-    public List<Note> findNotesByUser(MyUser user) {
-        return noteRepository.findByUser(user);
-    }
-
 }
 
 

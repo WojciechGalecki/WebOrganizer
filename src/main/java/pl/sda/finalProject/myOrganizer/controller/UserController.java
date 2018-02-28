@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
 import pl.sda.finalProject.myOrganizer.model.UserModel;
+import pl.sda.finalProject.myOrganizer.service.EventService;
 import pl.sda.finalProject.myOrganizer.service.UserService;
 
 import javax.validation.Valid;
@@ -21,6 +23,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private IUserRepository userRepository;
 
     @GetMapping("/organizer")
     public String showHomePage() {
@@ -51,7 +55,7 @@ public class UserController {
 
     @GetMapping("/organizer/profile")
     public String showProfilePage(Model model, Principal principal){
-        MyUser activeUser = userService.findUserByEmail(principal.getName());
+        MyUser activeUser = userRepository.findOne(principal.getName());
         model.addAttribute("activeUser", activeUser);
         return "profile";
     }

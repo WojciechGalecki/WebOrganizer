@@ -38,7 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/organizer", "/organizer/register")
                 .permitAll()
                 .antMatchers("/organizer/users").hasRole("ADMIN")
-                .antMatchers("/organizer/notes", "/organizer/tasks", "/organizer/profile")
+                .antMatchers("/organizer/notes", "/organizer/tasks",
+                        "/organizer/profile", "/organizer/events")
                 .hasAnyRole("USER,ADMIN").and()
                 .formLogin()
                 .passwordParameter("password")
