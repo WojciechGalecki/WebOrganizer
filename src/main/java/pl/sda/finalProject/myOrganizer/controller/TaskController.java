@@ -98,18 +98,20 @@ public class TaskController {
     }
 
     @GetMapping(path = "/organizer/tasks/done/{id}")
-    public String setTaskDone(@PathVariable("id") Long id){
+    public String setTaskDone(@PathVariable("id") Long id) {
 
-        if (taskRepository.findOne(id) == null) {
+        Task doneTask = taskRepository.findOne(id);
+
+        if (doneTask == null) {
             return "taskNotFound";
         }
-        Task doneTask = taskRepository.findOne(id);
-        if(doneTask.isActive()) {
-            doneTask.setActive(false);
-        }
-        doneTask.setActive(true);
-        taskRepository.save(doneTask);
 
+        if (doneTask.isActive()) {
+            doneTask.setActive(false);
+        } else {
+            doneTask.setActive(true);
+        }
+        taskRepository.save(doneTask);
         return "redirect:/organizer/tasks";
     }
 }
