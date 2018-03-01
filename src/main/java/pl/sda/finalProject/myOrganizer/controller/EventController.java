@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.sda.finalProject.myOrganizer.dao.IEventRepository;
 import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
@@ -52,16 +53,7 @@ public class EventController {
         }
 
         MyUser activeUser = userRepository.findOne(principal.getName());
-
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-
-        // eventDate required
-        newEvent.setEventDate(LocalDate.parse(newEvent.getStringEventDate(), dateFormatter));
-        // optional
-        if(!newEvent.getStringEventTime().isEmpty()){
-            newEvent.setEventTime(LocalTime.parse(newEvent.getStringEventTime(), timeFormatter));
-        }
+        eventService.parseEventDateAndTime(newEvent);
 
         Event entity = Event.builder()
                 .creationDate(LocalDate.now())
@@ -75,6 +67,61 @@ public class EventController {
                 .build();
 
         eventRepository.save(entity);
+
+        return "redirect:/organizer/events";
+    }
+
+    @GetMapping(path = "/organizer/events/edit{id}")
+    public String showEditForm(@PathVariable("id") Long id, Model model){
+
+        Event editEvent = eventRepository.findOne(id);
+
+        if(editEvent == null){
+            return "eventNotFound";
+        }
+
+        EventModel editModel = new EventModel(editEvent);
+        model.addAttribute("edit", editModel);
+
+        return "editEvent";
+    }
+
+    @PostMapping(path = "/organizer/events/edit{id}")
+    public String editEvent(@PathVariable("id") Long id, @Valid @ModelAttribute("edit") EventModel eventModel,
+                            BindingResult bindingResult){
+
+        Event entity = eventRepository.findOne(id);
+
+        if(entity == null){
+            return "eventNotFound";
+        }
+        if (bindingResult.hasErrors()) {
+            return "editEvent";
+        }
+
+        eventService.parseEventDateAndTime(eventModel);
+
+        entity.setCreationDate(LocalDate.now());
+        entity.setEventDate(eventModel.getEventDate());
+        entity.setName(eventModel.getName());
+        entity.setEventTime(eventModel.getEventTime());
+        entity.setMinutesBefore(eventModel.getMinutesBefore());
+        entity.setHoursBefore(eventModel.getHoursBefore());
+        entity.setDaysBefore(eventModel.getDaysBefore());
+        
+        eventRepository.save(entity);
+
+        return "redirect:/organizer/events";
+    }
+
+    @GetMapping(path = "/organizer/events/delete/{id}")
+    public String deleteEvent(@PathVariable("id") Long id){
+
+        if(eventRepository.findOne(id) == null){
+            return "eventNotFound";
+        }
+
+        eventRepository.delete(id);
 
         return "redirect:/organizer/events";
     }
