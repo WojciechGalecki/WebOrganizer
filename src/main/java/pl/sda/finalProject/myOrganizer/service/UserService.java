@@ -11,6 +11,7 @@ import pl.sda.finalProject.myOrganizer.entityAttributes.UserRole;
 import pl.sda.finalProject.myOrganizer.model.UserModel;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -37,10 +38,12 @@ public class UserService {
     private void createUserOrAdmin(UserModel userModel, UserRole userRole) {
 
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
+        userModel.setRegisterDate(LocalDate.now());
 
         MyUser newUser = MyUser.builder()
                 .email(userModel.getEmail())
                 .password(userModel.getPassword())
+                .registerDate(userModel.getRegisterDate())
                 .userName(userModel.getUserName())
                 .userRole(userRole).build();
 

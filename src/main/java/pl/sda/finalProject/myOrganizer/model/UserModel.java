@@ -11,6 +11,7 @@ import pl.sda.finalProject.myOrganizer.entity.Task;
 import pl.sda.finalProject.myOrganizer.entityAttributes.UserRole;
 
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -30,6 +31,8 @@ public class UserModel {
     @Size(min = 5)
     private String password;
 
+    private LocalDate registerDate;
+
     private UserRole userRole;
 
     private List<Note> notes;
@@ -40,6 +43,7 @@ public class UserModel {
         this.email = userEntity.getEmail();
         this.userName = userEntity.getUserName();
         this.password = userEntity.getPassword();
+        this.registerDate = userEntity.getRegisterDate();
         this.userRole = userEntity.getUserRole();
         this.notes = userEntity.getNotes();
         this.tasks = userEntity.getTasks();

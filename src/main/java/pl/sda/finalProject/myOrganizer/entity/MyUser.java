@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import pl.sda.finalProject.myOrganizer.entityAttributes.UserRole;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -24,6 +25,8 @@ public class MyUser {
     private String userName;
 
     private String password;
+
+    private LocalDate registerDate;
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
