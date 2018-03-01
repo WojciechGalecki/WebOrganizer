@@ -24,7 +24,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="table-dark" th:each="user: ${users}">
+        <tr class="table-action" th:each="user: ${users}">
             <td th:text="${users.indexOf(user) + 1}"></td>
             <td th:text="${user.userName}">name</td>
             <td th:text="${user.email}">email</td>

@@ -38,7 +38,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="table-info" th:each="note: ${notes}">
+                <tr class="table-action" th:each="note: ${notes}">
                     <td th:text="${notes.indexOf(note) + 1}"></td>
                     <td th:text="${note.name}"></td>
                     <td th:text="${note.creationDate}"></td>

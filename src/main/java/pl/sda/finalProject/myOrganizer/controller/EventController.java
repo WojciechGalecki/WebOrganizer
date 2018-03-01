@@ -71,7 +71,7 @@ public class EventController {
         return "redirect:/organizer/events";
     }
 
-    @GetMapping(path = "/organizer/events/edit{id}")
+    @GetMapping(path = "/organizer/events/edit/{id}")
     public String showEditForm(@PathVariable("id") Long id, Model model){
 
         Event editEvent = eventRepository.findOne(id);
@@ -80,13 +80,19 @@ public class EventController {
             return "eventNotFound";
         }
 
+
         EventModel editModel = new EventModel(editEvent);
+        editModel.setStringEventDate(eventService.parseEventDate(editEvent.getEventDate()));
+        if(editEvent.getEventTime() != null) {
+            editModel.setStringEventTime(eventService.parseEventTime(editEvent.getEventTime()));
+        }
         model.addAttribute("edit", editModel);
+        model.addAttribute("today", LocalDate.now());
 
         return "editEvent";
     }
 
-    @PostMapping(path = "/organizer/events/edit{id}")
+    @PostMapping(path = "/organizer/events/edit/{id}")
     public String editEvent(@PathVariable("id") Long id, @Valid @ModelAttribute("edit") EventModel eventModel,
                             BindingResult bindingResult){
 
@@ -96,7 +102,7 @@ public class EventController {
             return "eventNotFound";
         }
         if (bindingResult.hasErrors()) {
-            return "editEvent";
+            return "redirect:/organizer/events/edit/{id}";
         }
 
         eventService.parseEventDateAndTime(eventModel);
@@ -108,7 +114,7 @@ public class EventController {
         entity.setMinutesBefore(eventModel.getMinutesBefore());
         entity.setHoursBefore(eventModel.getHoursBefore());
         entity.setDaysBefore(eventModel.getDaysBefore());
-        
+
         eventRepository.save(entity);
 
         return "redirect:/organizer/events";

@@ -3,6 +3,7 @@ package pl.sda.finalProject.myOrganizer.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.sda.finalProject.myOrganizer.dao.IEventRepository;
 import pl.sda.finalProject.myOrganizer.dao.INoteRepository;
 import pl.sda.finalProject.myOrganizer.dao.ITaskRepository;
 import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
@@ -23,6 +24,8 @@ public class UserService {
     private INoteRepository noteRepository;
     @Autowired
     private ITaskRepository taskRepository;
+    @Autowired
+    private IEventRepository eventRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -63,6 +66,7 @@ public class UserService {
         MyUser userToDelete = userRepository.findOne(email);
         noteRepository.deleteAllByUser(userToDelete);
         taskRepository.deleteAllByUser(userToDelete);
+        eventRepository.deleteAllByUser(userToDelete);
         userRepository.delete(userToDelete);
     }
 }

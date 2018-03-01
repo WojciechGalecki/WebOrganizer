@@ -32,7 +32,7 @@
         </thead>
         <tbody>
 
-        <tr class="table-info" th:each="task: ${tasks}" th:classappend="${task.isActive()} ? myTaskDone : ''">
+        <tr class="table-action" th:each="task: ${tasks}" th:classappend="${task.isActive()} ? myTaskDone : ''">
             <td th:text="${tasks.indexOf(task) + 1}"></td>
             <td><a class="btn btn-outline-secondary" th:href="@{/organizer/tasks/done/{id}(id=${task.id})}">Done</a>
             </td>

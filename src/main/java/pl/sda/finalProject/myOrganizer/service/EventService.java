@@ -27,4 +27,12 @@ public class EventService {
             eventModel.setEventTime(LocalTime.parse(eventModel.getStringEventTime(), timeFormatter));
         }
     }
+
+    public String parseEventDate(LocalDate localDate){
+        return localDate.format(dateFormatter);
+    }
+
+    public String parseEventTime(LocalTime localTime){
+        return localTime.format(timeFormatter);
+    }
 }
