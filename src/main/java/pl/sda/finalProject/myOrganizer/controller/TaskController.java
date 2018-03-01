@@ -30,7 +30,7 @@ public class TaskController {
         Task newTask = new Task();
         MyUser activeUser = userRepository.findOne(principal.getName());
         model.addAttribute("newTask", newTask);
-        model.addAttribute("tasks", taskRepository.findByUserOrderByIdAsc(activeUser));
+        model.addAttribute("tasks", taskRepository.findByUserOrderByPriorityValueAsc(activeUser));
 
         return "tasks";
     }
@@ -49,6 +49,7 @@ public class TaskController {
         MyUser activeUser = userRepository.findOne(principal.getName());
         newTask.setUser(activeUser);
         newTask.setCreationDate(LocalDate.now());
+        newTask.setPriorityValue(newTask.getPriority().getValue());
         taskService.addTask(newTask);
         return "redirect:/organizer/tasks";
     }
@@ -79,10 +80,9 @@ public class TaskController {
         if (bindingResult.hasErrors()) {
             return "redirect:/organizer/tasks/edit/{id}";
         }
-        entityTask.setCreationDate(LocalDate.now());
         entityTask.setName(editTask.getName());
         entityTask.setPriority(editTask.getPriority());
-        taskRepository.save(entityTask);
+        taskService.addTask(editTask);
 
         return "redirect:/organizer/tasks";
     }

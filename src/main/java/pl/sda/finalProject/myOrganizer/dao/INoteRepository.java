@@ -10,6 +10,6 @@ package pl.sda.finalProject.myOrganizer.dao;
 @Repository
 public interface INoteRepository extends JpaRepository<Note, Long> {
 
-    List<Note> findByUser(MyUser user);
+    List<Note> findByUserOrderByIdAsc(MyUser user);
     void deleteAllByUser(MyUser user);
 }

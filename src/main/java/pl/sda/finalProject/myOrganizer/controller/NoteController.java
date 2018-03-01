@@ -30,7 +30,7 @@ public class NoteController {
         Note newNote = new Note();
         MyUser activeUser = userRepository.findOne(principal.getName());
         model.addAttribute("newNote", newNote);
-        model.addAttribute("notes", noteRepository.findByUser(activeUser));
+        model.addAttribute("notes", noteRepository.findByUserOrderByIdAsc(activeUser));
         return "notes";
     }
 
@@ -70,6 +70,7 @@ public class NoteController {
         if (bindingResult.hasErrors()) {
             return "organizer/notes/edit/{id}";
         }
+        entity.setName(editNote.getName());
         entity.setDescription(editNote.getDescription());
         noteService.addNote(entity);
         return "redirect:/organizer/notes";
