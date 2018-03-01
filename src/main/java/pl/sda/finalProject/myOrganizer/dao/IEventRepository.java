@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface IEventRepository extends JpaRepository<Event, Long> {
 
-    List<Event> findByUser(MyUser user);
+    List<Event> findByUserOrderByEventDateAsc(MyUser user);
     void deleteAllByUser(MyUser user);
+
 }

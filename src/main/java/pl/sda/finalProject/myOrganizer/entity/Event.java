@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -30,9 +28,11 @@ public class Event {
 
     private LocalTime eventTime;
 
-    private LocalDate reminderDate;
+    private int minutesBefore;
 
-    private LocalTime reminderTime;
+    private int hoursBefore;
+
+    private int daysBefore;
 
     @ManyToOne
     private MyUser user;

@@ -61,15 +61,15 @@
             <form role="form" id="addEventForm" th:action="@{/organizer/events}" method="post" th:object="${newEvent}">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="control-label col-md-3" for="eventDate">Pick date</label>
+                        <label for="eventDate">Pick date</label>
                         <div class="col-md-9">
                             <input class="myDate form-control" type="date" id="eventDate"
-                                   th:field="*{stringEventDate}" th:min="${today}"/>
+                                   th:field="*{stringEventDate}" th:min="${today}" required=""/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="eventTime">Event time</label>
-                        <input type="time" id="eventTime" th:field="*{eventTime}"/>
+                        <input type="time" id="eventTime" th:field="*{stringEventTime}"/>
                     </div>
                     <div class="form-group">
                         <label for="name">Event name</label>
@@ -81,15 +81,16 @@
                         <strong>Here you can add a reminder to your event</strong>
                     </div>
                     <div class="form-group">
-                        <label for="reminderDate">Pick reminder date</label>
-                        <div class="col-md-9">
-                            <input class="myDate form-control" type="date" id="reminderDate"
-                                   th:field="*{reminderDate}" th:min="${today}"/>
-                        </div>
+                        <label for="minutesBefore">Minutes before...</label>
+                        <input type="number" id="minutesBefore" th:field="*{minutesBefore}" min="0" max="59"/>
                     </div>
                     <div class="form-group">
-                        <label for="reminderTime">Reminder time</label>
-                        <input type="time" id="reminderTime" th:field="*{reminderTime}"/>
+                        <label for="hoursBefore">Hours before...</label>
+                        <input type="number" id="hoursBefore" th:field="*{hoursBefore}" min="0" max="23"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="daysBefore">Days before...</label>
+                        <input type="number" id="daysBefore" th:field="*{daysBefore}" min="0" max="366"/>
                     </div>
                 </div>
                 <div class="modal-footer">
