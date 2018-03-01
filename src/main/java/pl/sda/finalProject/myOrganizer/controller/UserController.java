@@ -56,7 +56,8 @@ public class UserController {
     @GetMapping("/organizer/profile")
     public String showProfilePage(Model model, Principal principal){
         MyUser activeUser = userRepository.findOne(principal.getName());
-        model.addAttribute("activeUser", activeUser);
+        UserModel activeModel = new UserModel(activeUser);
+        model.addAttribute("activeModel", activeModel);
         return "profile";
     }
 
