@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ITaskRepository extends JpaRepository<Task, Long> {
-
-    List<Task> findByUser(MyUser user);
+    
     void deleteAllByUser(MyUser user);
+    List<Task> findByUserOrderByIdAsc(MyUser user);
 }

@@ -22,12 +22,10 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
     private String name;
 
     private LocalDate creationDate;
 
-    //@NotEmpty
     private LocalDate eventDate;
 
     private LocalTime eventTime;

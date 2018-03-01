@@ -16,6 +16,7 @@ import pl.sda.finalProject.myOrganizer.service.EventService;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 public class EventController {
@@ -48,10 +49,13 @@ public class EventController {
             return "events";
         }
 
-        MyUser activeUser = userRepository.findOne(principal.getName());
+        /*MyUser activeUser = userRepository.findOne(principal.getName());
         newEvent.setUser(activeUser);
         newEvent.setCreationDate(LocalDate.now());
-        eventRepository.save(newEvent);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        newEvent.setEventDate(LocalDate.parse(newEvent.getStringEventDate(), formatter));
+        eventRepository.save(newEvent);*/
 
         return "redirect:/organizer/events";
     }

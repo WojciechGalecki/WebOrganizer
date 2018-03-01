@@ -30,7 +30,8 @@ public class TaskController {
         Task newTask = new Task();
         MyUser activeUser = userRepository.findOne(principal.getName());
         model.addAttribute("newTask", newTask);
-        model.addAttribute("tasks", taskRepository.findByUser(activeUser));
+        model.addAttribute("tasks", taskRepository.findByUserOrderByIdAsc(activeUser));
+
         return "tasks";
     }
 

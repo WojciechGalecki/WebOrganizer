@@ -56,12 +56,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form role="form" id="addTaskForm" th:action="@{/organizer/tasks}" method="post">
+            <form role="form" id="addTaskForm" th:action="@{/organizer/tasks}" method="post" th:object="${newTask}">
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="control-label col-md-3" for="name">Your task</label>
                         <div class="col-md-9">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="TODO..."
+                            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="TODO..."
                                    required=""/>
                         </div>
                     </div>
@@ -69,25 +69,25 @@
                         <legend>Priority</legend>
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="priority" value="NONE" checked=""/>
+                                <input type="radio" class="form-check-input" value="NONE" name="priority" checked="" />
                                 NONE
                             </label>
                         </div>
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="priority" value="LOW"/>
+                                <input type="radio" class="form-check-input" th:field="*{priority}" value="LOW"/>
                                 LOW
                             </label>
                         </div>
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="priority" value="MEDIUM"/>
+                                <input type="radio" class="form-check-input" th:field="*{priority}" value="MEDIUM"/>
                                 MEDIUM
                             </label>
                         </div>
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="priority" value="HIGH"/>
+                                <input type="radio" class="form-check-input" th:field="*{priority}" value="HIGH"/>
                                 HIGH
                             </label>
                         </div>
