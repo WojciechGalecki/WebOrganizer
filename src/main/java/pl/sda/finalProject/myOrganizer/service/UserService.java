@@ -26,7 +26,6 @@ public class UserService {
     private ITaskRepository taskRepository;
     @Autowired
     private IEventRepository eventRepository;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -51,7 +50,6 @@ public class UserService {
                 .userRole(userRole).build();
 
         userRepository.save(newUser);
-
     }
 
     public boolean isUserExist(String email) {

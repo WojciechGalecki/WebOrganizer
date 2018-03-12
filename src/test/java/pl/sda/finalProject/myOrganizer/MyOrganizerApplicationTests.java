@@ -22,53 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 public class MyOrganizerApplicationTests {
 
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private IUserRepository userRepository;
-    @Autowired
-    ITaskRepository taskRepository;
-
-    @Before
-    public void initDB() {
-
-        MyUser user = MyUser.builder().email("user@user.pl").password("12345")
-                .userName("user").build();
-
-        MyUser admin = MyUser.builder().email("admin@user.pl").password("12345")
-                .userName("admin").build();
-
-        userRepository.save(user);
-        userRepository.save(admin);
-
-    }
-
     @Test
-    public void findUserByEmail() {
-        MyUser user1 = userRepository.findOne("user@user.pl");
-        assertNotNull(user1);
-        MyUser user2 = userRepository.findOne("admin@user.pl");
-        assertEquals(user2.getEmail(), "admin@user.pl");
+    public void contextLoads() {
     }
-
-    @Test
-    public void deleteUserByEmail() {
-        userService.deleteUser("user@user.pl");
-        assertTrue(userRepository.findOne("user@user.pl") == null);
-    }
-
-    @Test
-    public void getEmail(){
-        String email1 = userRepository.findOne("user@user.pl").getEmail();
-        assertEquals(email1,"user@user.pl");
-    }
-
-
-   /* @Test
-    public void deleteTaskById(){
-        Task newTask = Task.builder().id(100l).build();
-        taskRepository.save(newTask);
-        taskRepository.delete(newTask.getId());
-        assertTrue(taskRepository.findOne(newTask.getId()) == null);
-    }*/
 }

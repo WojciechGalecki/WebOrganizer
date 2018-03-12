@@ -25,6 +25,11 @@
                 </div>
             </fieldset>
     </div>
+    <a class="btn btn-outline-secondary" th:href="@{/organizer/profile/edit}">Edit</a>
+    <form th:action="@{/organizer/profile}" method="post">
+       <input type="hidden" name="email" th:value="${activeModel.email}"/>
+        <button type="subbmit" class="btn btn-outline-danger">Delete Account</button>
+    </form>
 </div>
 <footer th:replace="fragments/footer::footer"></footer>
 

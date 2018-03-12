@@ -5,10 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
 import pl.sda.finalProject.myOrganizer.model.UserModel;
@@ -59,6 +56,12 @@ public class UserController {
         UserModel activeModel = new UserModel(activeUser);
         model.addAttribute("activeModel", activeModel);
         return "profile";
+    }
+
+    @PostMapping("/organizer/profile")
+    public String deleteUserAccount(@RequestParam("email") String email){
+        userService.deleteUser(email);
+        return "redirect:/organizer/register";
     }
 
     @GetMapping("/organizer/login")
