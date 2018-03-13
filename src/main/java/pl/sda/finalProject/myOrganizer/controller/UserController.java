@@ -1,6 +1,7 @@
 package pl.sda.finalProject.myOrganizer.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
 import pl.sda.finalProject.myOrganizer.model.UserModel;
-import pl.sda.finalProject.myOrganizer.service.EventService;
 import pl.sda.finalProject.myOrganizer.service.UserService;
 
 import javax.validation.Valid;
@@ -22,6 +22,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private IUserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/organizer")
     public String showHomePage() {
@@ -62,6 +64,40 @@ public class UserController {
     public String deleteUserAccount(@RequestParam("email") String email){
         userService.deleteUser(email);
         return "redirect:/organizer/register";
+    }
+
+    @GetMapping(path = "/organizer/profile/editPassword/{email}")
+    public String showEditUserPasswordForm(@PathVariable("email") String email, Model model){
+
+        MyUser user = userRepository.findOne(email);
+
+        if(user == null){
+            return "userNotFound";
+        }
+
+        UserModel activeModel = new UserModel(user);
+        model.addAttribute("edit", activeModel);
+
+        return "editPassword";
+    }
+
+    @PostMapping(path = "/organizer/profile/editPassword/{email}")
+    public String editUserPassword(@PathVariable("email") String email,
+                                   @Valid @ModelAttribute("edit") UserModel activeModel, BindingResult bindingResult){
+
+        MyUser entity = userRepository.findOne(email);
+
+        if(entity == null){
+            return "userNotFound";
+        }
+        if(bindingResult.hasFieldErrors("password")){
+            return "editPassword";
+        }
+
+        entity.setPassword(passwordEncoder.encode(activeModel.getPassword()));
+        userRepository.save(entity);
+
+        return "redirect:/organizer/login";
     }
 
     @GetMapping("/organizer/login")

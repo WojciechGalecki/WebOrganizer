@@ -24,12 +24,13 @@
                     <div class="col-sm-3 myProfileTxt" th:text="${activeModel.email}"></div>
                 </div>
             </fieldset>
+        <a class="btn btn-outline-secondary" th:href="@{/organizer/profile/editPassword/{email}(email=${activeModel.email})}">Edit password</a>
+        <form th:action="@{/organizer/profile}" method="post">
+            <input type="hidden" name="email" th:value="${activeModel.email}"/>
+            <button type="subbmit" class="btn btn-outline-danger">Delete Account</button>
+        </form>
     </div>
-    <a class="btn btn-outline-secondary" th:href="@{/organizer/profile/edit}">Edit</a>
-    <form th:action="@{/organizer/profile}" method="post">
-       <input type="hidden" name="email" th:value="${activeModel.email}"/>
-        <button type="subbmit" class="btn btn-outline-danger">Delete Account</button>
-    </form>
+
 </div>
 <footer th:replace="fragments/footer::footer"></footer>
 
