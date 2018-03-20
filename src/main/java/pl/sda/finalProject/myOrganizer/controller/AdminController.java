@@ -70,7 +70,7 @@ public class AdminController {
         return "redirect:/organizer/users";
     }
 
-    @GetMapping(path = "organizer/users/delete/{email}")
+    @GetMapping(path = "/organizer/users/delete/{email}")
     public String deleteUser(@PathVariable("email") String email) {
         if (userRepository.findOne(email) == null) {
             return "userNotFound";
