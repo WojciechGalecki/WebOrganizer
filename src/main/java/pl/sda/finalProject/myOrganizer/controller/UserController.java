@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
 import pl.sda.finalProject.myOrganizer.model.UserModel;
+import pl.sda.finalProject.myOrganizer.service.EventService;
 import pl.sda.finalProject.myOrganizer.service.UserService;
 
 import javax.validation.Valid;
@@ -24,9 +25,12 @@ public class UserController {
     private IUserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private EventService eventService;
 
     @GetMapping("/organizer")
-    public String showHomePage() {
+    public String showHomePage(Principal principal, Model model) {
+        model.addAttribute("currentEvents", eventService.showReminderForEvents(principal));
         return "organizer";
     }
 
