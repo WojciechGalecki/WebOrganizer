@@ -35,7 +35,7 @@ public class EventController {
     public String showEventsPage(Model model, Principal principal){
         EventModel newEvent = new EventModel();
         MyUser activeUser = userRepository.findOne(principal.getName());
-        model.addAttribute("events", eventRepository.findByUserOrderByEventDateAsc(activeUser));
+        model.addAttribute("events", eventService.showCurrentEvents(activeUser));
         model.addAttribute("newEvent", newEvent);
         model.addAttribute("today", LocalDate.now());
         model.addAttribute("currentEvents", eventService.showReminderForEvents(activeUser));

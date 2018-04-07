@@ -14,6 +14,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -42,6 +43,15 @@ public class EventService {
 
     public String parseEventTime(LocalTime localTime) {
         return localTime.format(timeFormatter);
+    }
+
+    public List<Event> showCurrentEvents(MyUser activeUser) {
+        List<Event> events = eventRepository.findByUserOrderByEventDateAsc(activeUser);
+
+       List<Event> currentEvents = events.stream().filter(event ->
+               event.getEventDate().isAfter(LocalDate.now()) || event.getEventDate().isEqual(LocalDate.now()))
+               .collect(Collectors.toList());
+       return currentEvents;
     }
 
     public List<String> showReminderForEvents(MyUser activeUser) {

@@ -29,7 +29,7 @@ public class UserController {
     private EventService eventService;
 
     @GetMapping("/organizer")
-    public String showHomePage(Principal principal, Model model) {
+    public String showHomePage(Model model) {
         return "organizer";
     }
 
