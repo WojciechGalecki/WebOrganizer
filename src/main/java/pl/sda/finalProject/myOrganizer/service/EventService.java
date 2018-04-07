@@ -48,7 +48,7 @@ public class EventService {
         List<String> eventsToReminder = new ArrayList<>();
 
         MyUser activeUser = userRepository.findOne(principal.getName());
-        List<Event> events = eventRepository.findAll(activeUser);
+        List<Event> events = eventRepository.findAllByUser(activeUser);
 
         for (Event event : events) {
             if (event.getEventDate().equals(LocalDate.now())) {

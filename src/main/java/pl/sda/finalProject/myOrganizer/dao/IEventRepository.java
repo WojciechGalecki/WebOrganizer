@@ -11,7 +11,7 @@ import java.util.List;
 public interface IEventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findByUserOrderByEventDateAsc(MyUser user);
-    List<Event> findAll(MyUser user);
+    List<Event> findAllByUser(MyUser user);
     void deleteAllByUser(MyUser user);
 
 }
