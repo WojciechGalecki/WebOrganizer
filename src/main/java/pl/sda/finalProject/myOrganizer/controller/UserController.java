@@ -30,7 +30,6 @@ public class UserController {
 
     @GetMapping("/organizer")
     public String showHomePage(Principal principal, Model model) {
-        model.addAttribute("currentEvents", eventService.showReminderForEvents(principal));
         return "organizer";
     }
 

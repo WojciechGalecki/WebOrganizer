@@ -44,10 +44,9 @@ public class EventService {
         return localTime.format(timeFormatter);
     }
 
-    public List<String> showReminderForEvents(Principal principal) {
+    public List<String> showReminderForEvents(MyUser activeUser) {
         List<String> eventsToReminder = new ArrayList<>();
 
-        MyUser activeUser = userRepository.findOne(principal.getName());
         List<Event> events = eventRepository.findAllByUser(activeUser);
 
         for (Event event : events) {

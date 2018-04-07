@@ -38,6 +38,7 @@ public class EventController {
         model.addAttribute("events", eventRepository.findByUserOrderByEventDateAsc(activeUser));
         model.addAttribute("newEvent", newEvent);
         model.addAttribute("today", LocalDate.now());
+        model.addAttribute("currentEvents", eventService.showReminderForEvents(activeUser));
         return "events";
     }
 
