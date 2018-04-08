@@ -47,13 +47,8 @@ public class EventService {
         return localTime.format(timeFormatter);
     }
 
-    public List<Event> showCurrentEvents(MyUser activeUser) {
+    public List<Event> getCurrentEvents(MyUser activeUser) {
         List<Event> events = eventRepository.findByUserOrderByEventDateAsc(activeUser);
-
-       /*List<Event> currentEvents = events.stream().filter(event ->
-               event.getEventDate().isAfter(LocalDate.now()) || event.getEventDate().isEqual(LocalDate.now()))
-               .collect(Collectors.toList());
-       return currentEvents;*/
 
         for (Iterator<Event> iterator = events.iterator(); iterator.hasNext(); ) {
             Event event = iterator.next();
@@ -65,16 +60,14 @@ public class EventService {
         return events;
     }
 
-    public List<String> showReminderForEvents(MyUser activeUser) {
-        List<String> eventsToReminder = new ArrayList<>();
+    public List<Event> getEventsToReminder(MyUser activeUser) {
 
-        List<Event> events = eventRepository.findAllByUser(activeUser);
+        List<Event> eventsToReminder = eventRepository.findAllByUser(activeUser);
 
-        for (Event event : events) {
-            if (event.getEventDate().equals(LocalDate.now())) {
-                eventsToReminder.add(event.getName());
-            }
-        }
+        eventsToReminder.stream().filter(
+                event -> event.getEventDate().isEqual(LocalDate.now())
+        ).collect(Collectors.toList());
+
         return eventsToReminder;
     }
 }
