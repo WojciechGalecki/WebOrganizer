@@ -35,7 +35,7 @@
         </thead>
         <tbody>
 
-        <tr class="table-action" th:each="event: ${events}">
+        <tr class="table-action" th:each="event: ${events}" th:classappend="${event.eventDate == today} ? todayEvent : ''">
             <td th:text="${events.indexOf(event) + 1}"></td>
             <td th:text="${event.eventDate}">date</td>
             <td th:text="${event.eventTime}">time</td>

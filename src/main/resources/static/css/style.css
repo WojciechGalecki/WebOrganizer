@@ -106,6 +106,10 @@
     color: #fff;
 }
 
+.todayEvent {
+    color: red;
+}
+
 .myProfileTxt{
     font-size: 24px;
 }
