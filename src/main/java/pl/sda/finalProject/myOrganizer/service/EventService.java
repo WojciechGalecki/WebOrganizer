@@ -1,5 +1,6 @@
 package pl.sda.finalProject.myOrganizer.service;
 
+import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.sda.finalProject.myOrganizer.dao.IEventRepository;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,10 +50,19 @@ public class EventService {
     public List<Event> showCurrentEvents(MyUser activeUser) {
         List<Event> events = eventRepository.findByUserOrderByEventDateAsc(activeUser);
 
-       List<Event> currentEvents = events.stream().filter(event ->
+       /*List<Event> currentEvents = events.stream().filter(event ->
                event.getEventDate().isAfter(LocalDate.now()) || event.getEventDate().isEqual(LocalDate.now()))
                .collect(Collectors.toList());
-       return currentEvents;
+       return currentEvents;*/
+
+        for (Iterator<Event> iterator = events.iterator(); iterator.hasNext(); ) {
+            Event event = iterator.next();
+            if (event.getEventDate().isBefore(LocalDate.now())) {
+                eventRepository.delete(event);
+                iterator.remove();
+            }
+        }
+        return events;
     }
 
     public List<String> showReminderForEvents(MyUser activeUser) {
