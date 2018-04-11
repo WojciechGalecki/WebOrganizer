@@ -63,8 +63,17 @@ public class EventService {
         // case Days Before Reminder
         // TODO: create method for all cases!!!
         return eventRepository.findAllByUser(activeUser).stream().filter(
-                event -> event.getDaysBefore() > 0 && event.getEventDate().
-                        minusDays((long) event.getDaysBefore()).isEqual(LocalDate.now())
+               // event -> event.getDaysBefore() > 0 && event.getEventDate().
+                        //minusDays((long) event.getDaysBefore()).isEqual(LocalDate.now())
+                event -> isEventToRemind(event)
         ).collect(Collectors.toList());
     }
+
+    private boolean isEventToRemind(Event event){
+        if(event.getDaysBefore() > 0 && event.getEventDate().
+                minusDays((long) event.getDaysBefore()).isEqual(LocalDate.now())){
+            return true;
+        } else return false;
+    }
+
 }
