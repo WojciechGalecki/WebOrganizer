@@ -38,7 +38,7 @@ public class EventController {
         model.addAttribute("events", eventService.getCurrentEvents(activeUser));
         model.addAttribute("newEvent", newEvent);
         model.addAttribute("today", LocalDate.now());
-        model.addAttribute("eventsToReminder", eventService.getEventsToReminder(activeUser));
+        //model.addAttribute("eventsToReminder", eventService.getEventsToReminder(activeUser));
         return "events";
     }
 

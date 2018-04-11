@@ -59,15 +59,4 @@ public class EventService {
         }
         return events;
     }
-
-    public List<Event> getEventsToReminder(MyUser activeUser) {
-
-        List<Event> eventsToReminder = eventRepository.findAllByUser(activeUser);
-
-        eventsToReminder.stream().filter(
-                event -> event.getEventDate().isEqual(LocalDate.now())
-        ).collect(Collectors.toList());
-
-        return eventsToReminder;
-    }
 }
