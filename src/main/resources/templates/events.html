@@ -15,10 +15,20 @@
 <div class="container-fluid myLinks">
     <h4 class="myContainer">My Events</h4>
     <button type="button" class="btn btn-primary btn-lg" id="myEventBtn">Add Event</button>
+    <div class="alert alert-dismissible alert-danger myReminders">
+        <strong>Your Reminders!</strong>
+        <table>
+            <tr th:each="remind: ${eventsToRemind}">
+                <td th:text="${remind.name}"></td>
+                <td th:text="${remind.eventDate}"></td>
+                <td th:text="${remind.eventTime}"></td>
+            </tr>
+        </table>
+    </div>
     <hr/>
     <div class="container myRegister" th:if="${validErrors} == true">
         <div class="alert alert-dismissible alert-danger">
-            <strong  th:text="${errorMsg}"></strong>
+            <strong th:text="${errorMsg}"></strong>
         </div>
     </div>
 
@@ -35,12 +45,14 @@
         </thead>
         <tbody>
 
-        <tr class="table-action" th:each="event: ${events}" th:classappend="${event.eventDate == today} ? todayEvent : ''">
+        <tr class="table-action" th:each="event: ${events}"
+            th:classappend="${event.eventDate == today} ? todayEvent : ''">
             <td th:text="${events.indexOf(event) + 1}"></td>
             <td th:text="${event.eventDate}">date</td>
             <td th:text="${event.eventTime}">time</td>
             <td th:text="${event.name}">name</td>
-            <td><a class="btn btn-outline-warning" th:href="@{/organizer/events/edit/{id}(id=${event.id})}">Edit</a></td>
+            <td><a class="btn btn-outline-warning" th:href="@{/organizer/events/edit/{id}(id=${event.id})}">Edit</a>
+            </td>
             <td><a class="btn btn-outline-danger" th:href="@{/organizer/events/delete/{id}(id=${event.id})}">Delete</a>
             </td>
         </tr>
