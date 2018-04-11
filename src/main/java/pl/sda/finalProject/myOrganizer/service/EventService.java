@@ -11,6 +11,7 @@ import pl.sda.finalProject.myOrganizer.model.EventModel;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,8 +24,6 @@ public class EventService {
 
     @Autowired
     private IEventRepository eventRepository;
-    @Autowired
-    private IUserRepository userRepository;
     @Autowired
     private DateTimeFormatter dateFormatter;
     @Autowired
@@ -60,14 +59,12 @@ public class EventService {
         return events;
     }
 
-    public List<Event> getEventsToReminder(MyUser activeUser) {
-
-        List<Event> eventsToReminder = eventRepository.findAllByUser(activeUser);
-
-        eventsToReminder.stream().filter(
-                event -> event.getEventDate().isEqual(LocalDate.now())
+    public List<Event> getEventsToRemind(MyUser activeUser) {
+        // case Days Before Reminder
+        // TODO: create method for all cases!!!
+        return eventRepository.findAllByUser(activeUser).stream().filter(
+                event -> event.getDaysBefore() > 0 && event.getEventDate().
+                        minusDays((long) event.getDaysBefore()).isEqual(LocalDate.now())
         ).collect(Collectors.toList());
-
-        return eventsToReminder;
     }
 }

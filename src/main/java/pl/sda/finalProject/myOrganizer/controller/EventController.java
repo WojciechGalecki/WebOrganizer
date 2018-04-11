@@ -32,13 +32,13 @@ public class EventController {
     private EventService eventService;
 
     @GetMapping("/organizer/events")
-    public String showEventsPage(Model model, Principal principal){
+    public String showEventsPage(Model model, Principal principal) {
         EventModel newEvent = new EventModel();
         MyUser activeUser = userRepository.findOne(principal.getName());
         model.addAttribute("events", eventService.getCurrentEvents(activeUser));
         model.addAttribute("newEvent", newEvent);
         model.addAttribute("today", LocalDate.now());
-        model.addAttribute("eventsToReminder", eventService.getEventsToReminder(activeUser));
+        model.addAttribute("eventsToRemind", eventService.getEventsToRemind(activeUser));
         return "events";
     }
 
@@ -73,18 +73,18 @@ public class EventController {
     }
 
     @GetMapping(path = "/organizer/events/edit/{id}")
-    public String showEditForm(@PathVariable("id") Long id, Model model){
+    public String showEditForm(@PathVariable("id") Long id, Model model) {
 
         Event editEvent = eventRepository.findOne(id);
 
-        if(editEvent == null){
+        if (editEvent == null) {
             return "eventNotFound";
         }
 
 
         EventModel editModel = new EventModel(editEvent);
         editModel.setStringEventDate(eventService.parseEventDate(editEvent.getEventDate()));
-        if(editEvent.getEventTime() != null) {
+        if (editEvent.getEventTime() != null) {
             editModel.setStringEventTime(eventService.parseEventTime(editEvent.getEventTime()));
         }
         model.addAttribute("edit", editModel);
@@ -95,11 +95,11 @@ public class EventController {
 
     @PostMapping(path = "/organizer/events/edit/{id}")
     public String editEvent(@PathVariable("id") Long id, @Valid @ModelAttribute("edit") EventModel eventModel,
-                            BindingResult bindingResult){
+                            BindingResult bindingResult) {
 
         Event entity = eventRepository.findOne(id);
 
-        if(entity == null){
+        if (entity == null) {
             return "eventNotFound";
         }
         if (bindingResult.hasErrors()) {
@@ -122,9 +122,9 @@ public class EventController {
     }
 
     @GetMapping(path = "/organizer/events/delete/{id}")
-    public String deleteEvent(@PathVariable("id") Long id){
+    public String deleteEvent(@PathVariable("id") Long id) {
 
-        if(eventRepository.findOne(id) == null){
+        if (eventRepository.findOne(id) == null) {
             return "eventNotFound";
         }
 
