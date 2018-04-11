@@ -19,7 +19,7 @@
         <strong>Your Reminders!</strong>
         <table>
             <tr th:each="remind: ${eventsToRemind}">
-                <td th:text="${remind.name}"></td>
+                <td style="color: mediumblue" th:text="${remind.name}"></td>
                 <td th:text="${remind.eventDate}"></td>
                 <td th:text="${remind.eventTime}"></td>
             </tr>
