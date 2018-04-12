@@ -1,20 +1,15 @@
 package pl.sda.finalProject.myOrganizer.service;
 
-import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.sda.finalProject.myOrganizer.dao.IEventRepository;
-import pl.sda.finalProject.myOrganizer.dao.IUserRepository;
 import pl.sda.finalProject.myOrganizer.entity.Event;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
 import pl.sda.finalProject.myOrganizer.model.EventModel;
-
-import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,20 +55,25 @@ public class EventService {
     }
 
     public List<Event> getEventsToRemind(MyUser activeUser) {
-        // case Days Before Reminder
-        // TODO: create method for all cases!!!
+
         return eventRepository.findAllByUser(activeUser).stream().filter(
-               // event -> event.getDaysBefore() > 0 && event.getEventDate().
-                        //minusDays((long) event.getDaysBefore()).isEqual(LocalDate.now())
                 event -> isEventToRemind(event)
         ).collect(Collectors.toList());
     }
 
     private boolean isEventToRemind(Event event){
+        if(event.getEventTime() == null){
+            event.setEventTime(LocalTime.MIDNIGHT);
+        }
         if(event.getDaysBefore() > 0 && event.getEventDate().
                 minusDays((long) event.getDaysBefore()).isEqual(LocalDate.now())){
             return true;
-        } else return false;
+        }
+        if(event.getHoursBefore() > 0 && LocalDateTime.now().isAfter(LocalDateTime.of(event.getEventDate(),
+                event.getEventTime()).minusHours((long)event.getHoursBefore()))){
+            return true;
+        }
+        // TODO : minutes before case
+            else return false;
     }
-
 }
