@@ -6,6 +6,7 @@ import pl.sda.finalProject.myOrganizer.dao.IEventRepository;
 import pl.sda.finalProject.myOrganizer.entity.Event;
 import pl.sda.finalProject.myOrganizer.entity.MyUser;
 import pl.sda.finalProject.myOrganizer.model.EventModel;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -61,19 +62,21 @@ public class EventService {
         ).collect(Collectors.toList());
     }
 
-    private boolean isEventToRemind(Event event){
-        if(event.getEventTime() == null){
+    private boolean isEventToRemind(Event event) {
+        if (event.getEventTime() == null) {
             event.setEventTime(LocalTime.MIDNIGHT);
         }
-        if(event.getDaysBefore() > 0 && event.getEventDate().
-                minusDays((long) event.getDaysBefore()).isEqual(LocalDate.now())){
+        if (event.getDaysBefore() > 0 && event.getEventDate().
+                minusDays(event.getDaysBefore()).isEqual(LocalDate.now())) {
             return true;
         }
-        if(event.getHoursBefore() > 0 && LocalDateTime.now().isAfter(LocalDateTime.of(event.getEventDate(),
-                event.getEventTime()).minusHours((long)event.getHoursBefore()))){
+        if (event.getHoursBefore() > 0 && LocalDateTime.now().isAfter(LocalDateTime.of(event.getEventDate(),
+                event.getEventTime()).minusHours(event.getHoursBefore()))) {
             return true;
         }
-        // TODO : minutes before case
-            else return false;
+        if (event.getMinutesBefore() > 0 && LocalDateTime.now().isAfter(LocalDateTime.of(event.getEventDate(),
+                event.getEventTime()).minusMinutes(event.getMinutesBefore()))) {
+            return true;
+        } else return false;
     }
 }
