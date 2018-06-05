@@ -1,18 +1,13 @@
-A simply web organizer with features:
+# Web Organizer
+The application is a simply web organizer with features:
 
-*notes
+- Notes
+- Tasks
+- Events with remind option
+- User and Admin roles
 
-*tasks
 
-*events
-
--creating/editing/deleting
-
-*spring security with user and admin roles
-
-Technologies:
-
--Spring Boot
--JPA/Hibernate
--Thymleaf
--HTML/CSS/JS
+# Technologies
+- Java with SpringBoot, Spring Security, JPA/Hibernate - Logic
+- HTML, CSS, JS with Thymleaf - View
+- Maven - Dependency Management
